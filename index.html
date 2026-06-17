@@ -1156,12 +1156,17 @@ function openUserModal(id){
 async function saveUserModal(){
   const m=_userModal;
   if(!m.name.trim()||!m.login.trim()){alert("Nome e login são obrigatórios.");return;}
-  const safeRole=m.role==="admin"?"user":m.role;
+  const editingSelf=m.id===STATE.currentUser.id;
+  const originalUser=STATE.users.find(u=>u.id===m.id);
+  // Preserve role: if editing self or original was admin, keep admin; otherwise cap at user
+  const safeRole=editingSelf&&isAdmin()?"admin":(originalUser?.role==="admin"?"admin":(m.role==="admin"?"user":m.role));
   const ph=m.password?await sha256(m.password):"";
   const existing=m.id?STATE.users.find(u=>u.id===m.id):null;
   const finalHash=ph||(existing?.passwordHash||"");
   const rec={id:m.id||uid(),name:m.name.trim(),login:m.login.trim(),email:m.email.trim(),passwordHash:finalHash,role:safeRole};
   if(m.id){STATE.users=STATE.users.map(u=>u.id===m.id?rec:u);}else{STATE.users.push(rec);}
+  // Update currentUser if editing self
+  if(editingSelf){STATE.currentUser={...STATE.currentUser,...rec};try{localStorage.setItem("ig_session",JSON.stringify({id:rec.id,login:rec.login,role:rec.role}));}catch{}}
   saveUsers();closeModal();goPage("users");
 }
 
