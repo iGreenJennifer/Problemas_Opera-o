@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>iGreen Energy — Problemas Diários Inadimplência</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0b1120;color:#e2e8f0;font-family:'Syne',sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:#0b1120;}::-webkit-scrollbar-thumb{background:#00c97a44;border-radius:3px;}
+input,select,textarea,button{font-family:'Inter',sans-serif;}
+.hidden{display:none!important;}
+.fade-in{animation:fadeIn 0.35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+#app{display:flex;flex-direction:column;min-height:100vh;}
+header{background:#0d1829;border-bottom:1px solid #1e2d45;position:sticky;top:0;z-index:100;}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:14px;}
+.logo-box{width:38px;height:38px;background:linear-gradient(135deg,#00c97a,#009955);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#0b1120;flex-shrink:0;}
+.logo-text{flex-shrink:0;}.logo-text .name{font-weight:800;font-size:15px;color:#e2e8f0;line-height:1;}.logo-text .sub{font-size:9px;color:#475569;margin-top:2px;font-family:Inter,sans-serif;}
+nav{display:flex;gap:3px;flex:1;padding:10px 0;flex-wrap:wrap;}
+.nav-btn{padding:8px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;background:transparent;border:none;color:#64748b;}
+.nav-btn:hover,.nav-btn.active{background:#00c97a18;color:#00c97a;}
+.user-info{flex-shrink:0;text-align:right;font-family:Inter,sans-serif;}
+.user-info .uname{font-size:12px;color:#94a3b8;}.user-info .urole{font-size:10px;color:#475569;}
+.urole.admin{color:#00c97a!important;}.urole.operator{color:#818cf8!important;}
+main{max-width:1280px;margin:0 auto;padding:24px 20px;flex:1;}
+footer{text-align:center;padding:16px;color:#334155;font-size:11px;font-family:Inter,sans-serif;border-top:1px solid #1e2d4540;margin-top:16px;}
+.card{background:#131d2e;border:1px solid #1e2d45;border-radius:12px;padding:18px;}
+.stat-card{background:linear-gradient(135deg,#131d2e,#0f1825);border:1px solid #1e2d45;border-radius:14px;padding:20px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,#00c97a);}
+.grid-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr;}.header-inner{flex-wrap:wrap;}nav{flex-wrap:wrap;}}
+.btn-primary{background:#00c97a;color:#0b1120;border:none;border-radius:8px;padding:9px 18px;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;transition:all .2s;font-size:13px;}
+.btn-primary:hover{background:#00e58a;transform:translateY(-1px);}
+.btn-ghost{background:#1e2d4555;color:#94a3b8;border:1px solid #1e2d45;border-radius:8px;padding:7px 13px;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{background:#1e2d45;color:#e2e8f0;}
+.btn-danger{background:#ef444422;color:#ef4444;border:1px solid #ef444444;border-radius:8px;padding:6px 11px;font-size:12px;cursor:pointer;transition:all .2s;}
+.btn-danger:hover{background:#ef444433;}
+.btn-sm{padding:5px 10px;font-size:12px;}
+.form-label{font-size:11px;color:#64748b;margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.05em;font-family:Inter,sans-serif;}
+.form-input{background:#0b1120;border:1px solid #1e2d45;color:#e2e8f0;border-radius:8px;padding:9px 13px;width:100%;font-size:13px;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:#00c97a55;}.form-input:disabled{opacity:.4;}
+select.form-input option{background:#131d2e;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{margin-bottom:12px;}
+.time-row{display:flex;gap:7px;align-items:center;}.time-row .form-input{flex:1;}
+.chk-label{display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;}
+.chk-label input{accent-color:#00c97a;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.07em;padding:9px 13px;font-family:Inter,sans-serif;border-bottom:1px solid #1e2d45;}
+td{padding:10px 13px;font-size:12px;font-family:Inter,sans-serif;border-bottom:1px solid #1e2d4555;vertical-align:middle;}
+tr:hover td{background:#131d2e88;}
+.tbl-wrap{border-radius:12px;overflow:hidden;border:1px solid #1e2d45;}
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:600;font-family:Inter,sans-serif;}
+.chip{background:#1e2d45;border:1px solid #2d3f5a;color:#94a3b8;border-radius:20px;padding:4px 11px;font-size:11px;cursor:pointer;transition:all .15s;font-family:Inter,sans-serif;white-space:nowrap;}
+.chip:hover,.chip.sel{background:#00c97a22;border-color:#00c97a55;color:#00c97a;}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.mini-bar{height:5px;background:#1e2d45;border-radius:3px;overflow:hidden;margin-top:6px;}
+.mini-bar-fill{height:100%;border-radius:3px;transition:width .5s ease;}
+.sec-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#475569;margin-bottom:12px;font-family:Inter,sans-serif;}
+.modal-overlay{position:fixed;inset:0;background:#0b112099;backdrop-filter:blur(5px);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;}
+.modal-box{background:#131d2e;border:1px solid #1e2d45;border-radius:16px;padding:24px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-title{font-size:17px;font-weight:700;color:#e2e8f0;}
+.page-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.page-title{font-size:22px;font-weight:800;color:#e2e8f0;}
+.page-sub{color:#475569;font-size:12px;font-family:Inter,sans-serif;margin-top:3px;}
+.filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+.alert{padding:9px 13px;border-radius:8px;font-size:12px;font-family:Inter,sans-serif;margin-bottom:12px;}
+.alert-err{background:#ef444420;border:1px solid #ef444440;color:#ef4444;}
+.alert-ok{background:#00c97a20;border:1px solid #00c97a40;color:#00c97a;}
+.alert-info{background:#f59e0b18;border:1px solid #f59e0b33;color:#f59e0b;}
+#login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b1120;}
+.login-box{background:#131d2e;border:1px solid #1e2d45;border-radius:16px;padding:28px;width:100%;max-width:400px;}
+.login-logo{text-align:center;margin-bottom:28px;}
+.login-logo .logo-big{width:60px;height:60px;background:linear-gradient(135deg,#00c97a,#009955);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:#0b1120;margin:0 auto 12px;}
+.login-logo h1{font-size:24px;font-weight:800;color:#e2e8f0;}
+.login-logo p{font-size:12px;color:#475569;font-family:Inter,sans-serif;margin-top:4px;}
+.tab-wrap{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.recent-item{display:flex;align-items:flex-start;gap:9px;padding:9px;background:#0b112088;border-radius:8px;border:1px solid #1e2d4550;margin-bottom:7px;}
+.recent-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.recent-meta{font-size:11px;color:#64748b;}.recent-reason{font-size:12px;color:#cbd5e1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mbar-row{margin-bottom:12px;}
+.mbar-label{display:flex;justify-content:space-between;font-size:11px;font-family:Inter,sans-serif;margin-bottom:3px;}
+.mbar-label span:first-child{color:#94a3b8;}.mbar-label span:last-child{color:#00c97a;font-weight:600;}
+.mbar-seg-wrap{display:flex;gap:2px;height:12px;}
+.mbar-seg{border-radius:3px;min-width:3px;}
+.plat-stat-row{display:flex;justify-content:space-between;font-size:11px;font-family:Inter,sans-serif;padding:4px 0;border-bottom:1px solid #1e2d4530;}
+.plat-stat-row span:first-child{color:#64748b;}
+.no-access{text-align:center;padding:60px;color:#475569;font-family:Inter,sans-serif;}
+.dt-preview{background:#f59e0b18;border:1px solid #f59e0b33;border-radius:8px;padding:9px 13px;font-size:12px;font-family:Inter,sans-serif;color:#f59e0b;margin-bottom:12px;}
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cal-head{text-align:center;font-size:10px;color:#475569;font-family:Inter,sans-serif;padding:4px 0;font-weight:600;}
+.cal-day{aspect-ratio:1;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-family:Inter,sans-serif;cursor:pointer;transition:all .15s;position:relative;border:1px solid transparent;}
+.cal-day:hover{border-color:#1e2d45;transform:scale(1.05);}
+.cal-day.empty{background:transparent;cursor:default;}
+.cal-day.ok{background:#0d2b1e;color:#00c97a55;}
+.cal-day.lv1{background:#1a3a1a;color:#86efac;border-color:#166534;}
+.cal-day.lv2{background:#3b2005;color:#fbbf24;border-color:#92400e;}
+.cal-day.lv3{background:#3b0a0a;color:#f87171;border-color:#991b1b;}
+.cal-day .cal-num{font-size:12px;font-weight:600;}
+.cal-day .cal-cnt{font-size:9px;margin-top:1px;}
+.cal-day.today{border-color:#00c97a!important;box-shadow:0 0 0 1px #00c97a44;}
+/* STATUS BADGES */
+.status-open{background:#ef444422;color:#ef4444;border:1px solid #ef444444;}
+.status-progress{background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44;}
+.status-waiting{background:#6366f122;color:#818cf8;border:1px solid #6366f144;}
+.status-resolved{background:#00c97a22;color:#00c97a;border:1px solid #00c97a44;}
+/* STREAK */
+.streak-card{background:linear-gradient(135deg,#0d2b1e,#0b1120);border:1px solid #166534;border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:0;overflow:hidden;}
+.streak-num{font-size:36px;font-weight:800;color:#00c97a;}
+/* TREND */
+.trend-up{color:#ef4444;}.trend-down{color:#00c97a;}.trend-eq{color:#64748b;}
+</style>
+</head>
+<body>
+
+<div id="login-page">
+  <div style="width:100%;max-width:440px;padding:20px;">
+    <div class="login-logo">
+      <div class="logo-big">iG</div>
+      <h1>iGreen Energy</h1>
+      <p>Problemas Diários · Equipe Inadimplência</p>
+    </div>
+    <button class="btn-primary" style="width:100%;padding:13px;font-size:14px;margin-bottom:12px;background:#1e2d45;color:#94a3b8;border:1px solid #2d3f5a;" onclick="doLoginViewer()">
+      👁️ Entrar como Visualização &nbsp;<span style="font-size:11px;opacity:.7;">(sem login ou senha)</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="flex:1;height:1px;background:#1e2d45;"></div>
+      <span style="font-size:10px;color:#334155;font-family:Inter,sans-serif;">ou acesse como administradora</span>
+      <div style="flex:1;height:1px;background:#1e2d45;"></div>
+    </div>
+    <div class="login-box">
+      <div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px;">🔐 Acesso Administrador</div>
+      <div class="form-group">
+        <label class="form-label">Login</label>
+        <input class="form-input" id="inp-login" type="text" placeholder="seu.login" autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <input class="form-input" id="inp-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <div id="login-err" class="alert alert-err hidden"></div>
+      <button class="btn-primary" style="width:100%;padding:11px;font-size:14px;" onclick="doLogin()">Entrar</button>
+    </div>
+    <div style="margin-top:18px;text-align:center;font-size:10px;color:#334155;font-family:Inter,sans-serif;">
+      Desenvolvido por Jennifer Silveira · iGreen Energy © 2026<br>
+      <a href="mailto:jennifer.silveira@igreenenergy.com.br" style="color:#00c97a;text-decoration:none;">jennifer.silveira@igreenenergy.com.br</a>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header>
+    <div class="header-inner">
+      <div class="logo-box">iG</div>
+      <div class="logo-text">
+        <div class="name">iGreen Energy</div>
+        <div class="sub">Problemas Diários · Equipe Inadimplência</div>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-page="dashboard" onclick="goPage('dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" data-page="calendar" onclick="goPage('calendar')">📅 Calendário</button>
+        <button class="nav-btn" data-page="incidents" onclick="goPage('incidents')">⚠️ Ocorrências</button>
+        <button class="nav-btn" data-page="reports" onclick="goPage('reports')">📈 Relatórios</button>
+        <button class="nav-btn" id="nav-users" data-page="users" onclick="goPage('users')" style="display:none">👥 Usuários</button>
+        <button class="nav-btn" id="nav-platforms" data-page="platforms" onclick="goPage('platforms')" style="display:none">🖥️ Plataformas</button>
+      </nav>
+      <div class="user-info">
+        <div class="uname" id="hdr-uname"></div>
+        <div class="urole" id="hdr-urole"></div>
+      </div>
+      <button class="btn-ghost btn-sm" id="btn-myaccount" onclick="openMyAccount()" style="display:none;margin-right:4px;">👤</button>
+      <button class="btn-ghost btn-sm" onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+  <main id="main-content"></main>
+  <footer>Desenvolvido por Jennifer Silveira · iGreen Energy © 2026<br><a href="mailto:jennifer.silveira@igreenenergy.com.br" style="color:#00c97a;text-decoration:none;">jennifer.silveira@igreenenergy.com.br</a></footer>
+</div>
+
+<div id="modal-overlay" class="modal-overlay hidden" onclick="closeModalOverlay(event)">
+  <div class="modal-box" id="modal-box"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════
+const MONTH_FULL=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const WEEKDAYS=["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const STATUS_LIST=["Aberto","Em andamento","Aguardando fornecedor","Resolvido"];
+const STATUS_CSS={"Aberto":"status-open","Em andamento":"status-progress","Aguardando fornecedor":"status-waiting","Resolvido":"status-resolved"};
+const IMPACT_LIST=["1-2 agentes","3-5 agentes","6-10 agentes","Equipe toda"];
+const PRESET_COLORS=["#00c97a","#f59e0b","#6366f1","#ef4444","#06b6d4","#ec4899","#8b5cf6","#f97316","#14b8a6","#a3e635"];
+
+const SEED_PLATFORMS=[
+  {id:"p1",name:"3C+",color:"#00c97a",reasons:["Não dá para finalizar/tabular as ligações","Não dá para logar na plataforma","Plataforma deslogando os agentes toda hora","Ligações caindo mudas em todas as ligações","A discadora não disca para os clientes","Plataforma não abre - site inacessível","Não aparece os dados/informações dos clientes","2 ligações simultâneas - clientes ouvem o agente","Plataforma encerra a ligação mas agente ainda ouve o cliente","Plataforma não deixa agentes tirarem a pausa","Lista de ligação encerrada sem discar para todos"]},
+  {id:"p2",name:"Internet",color:"#f59e0b",reasons:["Conexão instável","Sem internet","Lentidão extrema","Queda de sinal","Intermitência na conexão"]},
+  {id:"p3",name:"Chatwoot",color:"#6366f1",reasons:["Plataforma fora do ar","Não carrega conversas","Erro ao enviar mensagens","Login não funciona","Notificações não aparecem"]},
+  {id:"p4",name:"BackOffice",color:"#ef4444",reasons:["Sistema fora do ar","Dados não carregam","Erro ao salvar registros","Login não funciona","Lentidão no sistema"]}
+];
+
+const SEED_INCIDENTS=[
+  {id:"i1",platform:"3C+",date:"2025-02-05",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i2",platform:"3C+",date:"2025-02-09",reason:"Lista de ligação encerrada sem discar para todos",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i3",platform:"3C+",date:"2025-02-11",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i4",platform:"3C+",date:"2025-02-13",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i5",platform:"3C+",date:"2025-02-23",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i6",platform:"3C+",date:"2025-02-26",reason:"Ligações caindo mudas em todas as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i7",platform:"3C+",date:"2025-02-27",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i8",platform:"3C+",date:"2025-03-02",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i9",platform:"3C+",date:"2025-03-04",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i10",platform:"3C+",date:"2025-03-05",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i11",platform:"3C+",date:"2025-03-06",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i12",platform:"3C+",date:"2025-03-09",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i13",platform:"3C+",date:"2025-03-10",reason:"Ligações caindo mudas em todas as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i14",platform:"3C+",date:"2025-03-11",reason:"Plataforma não abre - site inacessível",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i15",platform:"3C+",date:"2025-03-12",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i16",platform:"3C+",date:"2025-03-18",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i17",platform:"3C+",date:"2025-03-19",reason:"A discadora não disca para os clientes",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i18",platform:"3C+",date:"2025-03-20",reason:"A discadora não disca para os clientes",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i19",platform:"3C+",date:"2025-03-23",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i20",platform:"3C+",date:"2025-03-24",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i21",platform:"3C+",date:"2025-03-25",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i22",platform:"3C+",date:"2025-03-27",reason:"Ligações caindo mudas em todas as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i23",platform:"3C+",date:"2025-03-30",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i24",platform:"3C+",date:"2025-03-31",reason:"Não aparece os dados/informações dos clientes",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i25",platform:"3C+",date:"2025-04-01",reason:"2 ligações simultâneas - clientes ouvem o agente",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i26",platform:"3C+",date:"2025-04-02",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i27",platform:"3C+",date:"2025-04-06",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i28",platform:"3C+",date:"2025-04-07",reason:"Plataforma encerra a ligação mas agente ainda ouve o cliente",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i29",platform:"3C+",date:"2025-04-08",reason:"Plataforma não deixa agentes tirarem a pausa",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i30",platform:"3C+",date:"2025-04-09",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i31",platform:"3C+",date:"2025-04-10",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i32",platform:"3C+",date:"2025-04-13",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i33",platform:"3C+",date:"2025-04-14",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i34",platform:"3C+",date:"2025-04-16",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i35",platform:"3C+",date:"2025-04-20",reason:"Não dá para finalizar/tabular as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i36",platform:"3C+",date:"2025-04-22",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i37",platform:"3C+",date:"2025-04-23",reason:"Ligações caindo mudas em todas as ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"i38",platform:"3C+",date:"2025-05-05",reason:"Lista de ligação encerrada sem discar para todos",timeDown:"08:00",timeBack:"10:30",status:"Resolvido",impact:"Equipe toda",reporter:"",notes:""},
+  {id:"i39",platform:"3C+",date:"2025-05-06",reason:"Lista de ligação encerrada sem discar para todos",timeDown:"09:00",timeBack:"11:00",status:"Resolvido",impact:"Equipe toda",reporter:"",notes:""},
+  {id:"b1",platform:"BackOffice",date:"2025-02-04",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b2",platform:"BackOffice",date:"2025-02-05",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b3",platform:"BackOffice",date:"2025-02-06",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b4",platform:"BackOffice",date:"2025-02-10",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b5",platform:"BackOffice",date:"2025-02-11",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b6",platform:"BackOffice",date:"2025-02-12",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b7",platform:"BackOffice",date:"2025-02-13",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b8",platform:"BackOffice",date:"2025-02-17",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b9",platform:"BackOffice",date:"2025-02-19",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b10",platform:"BackOffice",date:"2025-02-20",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b11",platform:"BackOffice",date:"2025-02-23",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b12",platform:"BackOffice",date:"2025-02-24",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b13",platform:"BackOffice",date:"2025-02-25",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b14",platform:"BackOffice",date:"2025-02-26",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b15",platform:"BackOffice",date:"2025-02-27",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b16",platform:"BackOffice",date:"2025-03-02",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b17",platform:"BackOffice",date:"2025-03-03",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b18",platform:"BackOffice",date:"2025-03-04",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b19",platform:"BackOffice",date:"2025-03-05",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b20",platform:"BackOffice",date:"2025-03-06",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b21",platform:"BackOffice",date:"2025-03-09",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b22",platform:"BackOffice",date:"2025-03-13",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b23",platform:"BackOffice",date:"2025-03-14",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b24",platform:"BackOffice",date:"2025-03-16",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b25",platform:"BackOffice",date:"2025-03-17",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b26",platform:"BackOffice",date:"2025-03-18",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b27",platform:"BackOffice",date:"2025-03-20",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b28",platform:"BackOffice",date:"2025-03-23",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b29",platform:"BackOffice",date:"2025-03-26",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b30",platform:"BackOffice",date:"2025-04-02",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b31",platform:"BackOffice",date:"2025-04-08",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b32",platform:"BackOffice",date:"2025-04-09",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b33",platform:"BackOffice",date:"2025-04-16",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b34",platform:"BackOffice",date:"2025-04-17",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b35",platform:"BackOffice",date:"2025-04-20",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b36",platform:"BackOffice",date:"2025-04-22",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b37",platform:"BackOffice",date:"2025-04-23",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b38",platform:"BackOffice",date:"2025-05-04",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b39",platform:"BackOffice",date:"2025-05-06",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  {id:"b40",platform:"BackOffice",date:"2025-05-07",reason:"Sistema fora do ar",timeDown:null,timeBack:null,status:"Resolvido",impact:"",reporter:"",notes:""},
+  // ── Junho 2026 ──
+  {id:"j01",platform:"3C+",date:"2026-06-01",reason:"A ligação cai, porém as informações do cliente não aparecem.",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Jheniffer Santos",notes:""},
+  {id:"j02",platform:"Internet",date:"2026-06-01",reason:"Lentidão extrema",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Déborah Freitas",notes:""},
+  {id:"j03",platform:"BackOffice",date:"2026-06-01",reason:"Acesso não autorizado",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Luciana Almeida",notes:""},
+  {id:"j04",platform:"BackOffice",date:"2026-06-02",reason:"Dados não carregam",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Marcelle Ribeiro",notes:""},
+  {id:"j05",platform:"BackOffice",date:"2026-06-03",reason:"Acesso não autorizado",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Nathalia Menezes",notes:""},
+  {id:"j06",platform:"Internet",date:"2026-06-05",reason:"Notebooks com Wifi bloqueados",timeDown:null,timeBack:null,status:"Aberto",impact:"Equipe toda",reporter:"Matheus Urias",notes:""},
+  {id:"j07",platform:"Internet",date:"2026-06-06",reason:"Notebooks com Wifi bloqueados",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Gabriela Scharf",notes:""},
+  {id:"j08",platform:"3C+",date:"2026-06-08",reason:"Encerrando e zerando as lista de ligação",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Jennifer Silveira",notes:""},
+  {id:"j09",platform:"BackOffice",date:"2026-06-08",reason:"Acesso não autorizado",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Henrique Martins",notes:""},
+  {id:"j10",platform:"Internet",date:"2026-06-08",reason:"Lentidão extrema",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Déborah Freitas",notes:""},
+  {id:"j11",platform:"3C+",date:"2026-06-09",reason:"Não dá para logar na plataforma",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Michelle Batista",notes:""},
+  {id:"j12",platform:"BackOffice",date:"2026-06-09",reason:"Erro interno servidor",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Mateus Keveny",notes:""},
+  {id:"j13",platform:"3C+",date:"2026-06-10",reason:"A discadora não disca para os clientes",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Emanuel Cardoso",notes:""},
+  {id:"j14",platform:"BackOffice",date:"2026-06-10",reason:"Dados não carregam",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Anna Clara",notes:""},
+  {id:"j15",platform:"Internet",date:"2026-06-10",reason:"Lentidão extrema",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Déborah Freitas",notes:""},
+  {id:"j16",platform:"3C+",date:"2026-06-11",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Grasielle Santos",notes:""},
+  {id:"j17",platform:"BackOffice",date:"2026-06-11",reason:"Erro ao carregar dados",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Eduarda Sanqueta",notes:""},
+  {id:"j18",platform:"3C+",date:"2026-06-12",reason:"Problema ao tabular ligações",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Grasielle Santos",notes:""},
+  {id:"j19",platform:"BackOffice",date:"2026-06-12",reason:"Lentidão no sistema",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Ana Luiza",notes:""},
+  {id:"j20",platform:"3C+",date:"2026-06-15",reason:"Plataforma deslogando os agentes toda hora",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Heverton Tavares",notes:""},
+  {id:"j21",platform:"Internet",date:"2026-06-15",reason:"Conexão instável",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Matheus Urias",notes:""},
+  {id:"j22",platform:"BackOffice",date:"2026-06-15",reason:"Não é possível corrigir devolutivas",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Marcelle Rabelo",notes:""},
+  {id:"j23",platform:"BackOffice",date:"2026-06-16",reason:"Erro ao carregar dados",timeDown:null,timeBack:null,status:"Resolvido",impact:"Equipe toda",reporter:"Mateus Keveny",notes:""},
+  {id:"j24",platform:"3C+",date:"2026-06-17",reason:"A discadora não disca para os clientes",timeDown:null,timeBack:null,status:"Em andamento",impact:"Equipe toda",reporter:"Jennifer Silveira",notes:""},
+  {id:"j25",platform:"BackOffice",date:"2026-06-17",reason:"Dados não carregam",timeDown:null,timeBack:null,status:"Em andamento",impact:"Equipe toda",reporter:"Otaídes Júnior",notes:""},
+  {id:"j26",platform:"Internet",date:"2026-06-17",reason:"Lentidão extrema",timeDown:null,timeBack:null,status:"Aberto",impact:"Equipe toda",reporter:"Samires Barros",notes:""}
+];
+
+const SEED_USERS=[
+  {id:"u1",name:"Jennifer Silveira",email:"jennifer.silveira@igreenenergy.com.br",login:"jennifer.silveira",passwordHash:"__SEED__igreen2026",role:"admin"},
+  {id:"u2",name:"Visualização Geral",email:"",login:"visualizacao",passwordHash:"",role:"viewer"}
+];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+let STATE={currentUser:null,incidents:[],users:[],platforms:[],customReasons:{}};
+
+const DATA_VER="v6";
+function loadState(){
+  const ver=localStorage.getItem("ig_version");
+  if(ver!==DATA_VER){
+    let saved=[];
+    try{saved=JSON.parse(localStorage.getItem("ig_incidents"))||[];}catch{}
+    const ids=new Set(saved.map(i=>i.id));
+    const fresh=SEED_INCIDENTS.filter(i=>!ids.has(i.id));
+    // migrate existing records to add new fields
+    const migrated=saved.map(i=>({status:"Resolvido",impact:"",reporter:"",notes:"",...i}));
+    STATE.incidents=[...migrated,...fresh];
+    localStorage.setItem("ig_version",DATA_VER);
+    saveIncidents();
+  } else {
+    try{STATE.incidents=JSON.parse(localStorage.getItem("ig_incidents"))||SEED_INCIDENTS;}catch{STATE.incidents=[...SEED_INCIDENTS];}
+  }
+  try{STATE.users=JSON.parse(localStorage.getItem("ig_users"))||SEED_USERS;}catch{STATE.users=[...SEED_USERS];}
+  try{STATE.customReasons=JSON.parse(localStorage.getItem("ig_reasons"))||{};}catch{STATE.customReasons={};}
+  try{const sp=JSON.parse(localStorage.getItem("ig_platforms"));if(sp&&sp.length>0){STATE.platforms=sp;}else{STATE.platforms=[...SEED_PLATFORMS];savePlatforms();}}catch{STATE.platforms=[...SEED_PLATFORMS];savePlatforms();}
+}
+function saveIncidents(){try{localStorage.setItem("ig_incidents",JSON.stringify(STATE.incidents));}catch{}}
+function saveUsers(){try{localStorage.setItem("ig_users",JSON.stringify(STATE.users));}catch{}}
+function saveReasons(){try{localStorage.setItem("ig_reasons",JSON.stringify(STATE.customReasons));}catch{}}
+function savePlatforms(){try{localStorage.setItem("ig_platforms",JSON.stringify(STATE.platforms));}catch{}}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+function PLATFORMS(){return STATE.platforms.map(p=>p.name);}
+function platColor(name){const p=STATE.platforms.find(x=>x.name===name);return p?p.color:"#94a3b8";}
+function fmtDate(d){const dt=new Date(d+"T00:00:00");return String(dt.getDate()).padStart(2,"0")+"/"+String(dt.getMonth()+1).padStart(2,"0")+"/"+dt.getFullYear();}
+function monthKey(d){const dt=new Date(d+"T00:00:00");return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0");}
+function monthLabel(k){const[y,m]=k.split("-");return MONTH_FULL[parseInt(m)-1]+" "+y;}
+function calcMins(td,tb){if(!td||!tb)return 0;const[h1,m1]=td.split(":").map(Number);const[h2,m2]=tb.split(":").map(Number);return Math.max(0,(h2*60+m2)-(h1*60+m1));}
+function fmtMins(mins){if(!mins)return null;const h=Math.floor(mins/60),m=mins%60;return h>0?(m>0?h+"h"+m+"min":h+"h"):m+"min";}
+function uid(){return "x"+Date.now()+Math.random().toString(36).slice(2,6);}
+function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function getReasons(platform){const p=STATE.platforms.find(x=>x.name===platform);return[...(p?p.reasons:[]),...(STATE.customReasons[platform]||[])];}
+function isAdmin(){return STATE.currentUser?.role==="admin";}
+function canEdit(){return isAdmin();}
+function canExport(){return STATE.currentUser?.role==="admin"||STATE.currentUser?.role==="user";}
+function todayStr(){return new Date().toISOString().split("T")[0];}
+
+// ═══════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════
+async function sha256(str){
+  if(!str)return"";
+  const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function initSeedPasswords(){
+  // Convert any __SEED__plaintext entries to real hashes on first run
+  let changed=false;
+  for(let u of STATE.users){
+    if(u.passwordHash&&u.passwordHash.startsWith("__SEED__")){
+      const plain=u.passwordHash.slice(8);
+      u.passwordHash=await sha256(plain);
+      // also migrate old 'password' field if still present
+      delete u.password;
+      changed=true;
+    } else if(u.password!==undefined&&!u.passwordHash){
+      // migrate old plain-text password field
+      u.passwordHash=await sha256(u.password);
+      delete u.password;
+      changed=true;
+    }
+  }
+  if(changed)saveUsers();
+}
+function activateUser(u){
+  STATE.currentUser=u;
+  try{localStorage.setItem("ig_session",JSON.stringify({id:u.id,login:u.login,role:u.role}));}catch{}
+  document.getElementById("login-page").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  document.getElementById("hdr-uname").textContent=u.name;
+  const roleLabel=u.role==="admin"?"Administradora":u.role==="viewer"?"Visualização":"Operador";
+  document.getElementById("hdr-urole").textContent=roleLabel;
+  document.getElementById("hdr-urole").className="urole"+(u.role==="admin"?" admin":u.role==="user"?" operator":"");
+  if(isAdmin()){
+    document.getElementById("nav-users").style.display="";
+    document.getElementById("nav-platforms").style.display="";
+    document.getElementById("btn-myaccount").style.display="";
+  }
+  goPage("dashboard");
+}
+function restoreSession(){
+  try{
+    const s=JSON.parse(localStorage.getItem("ig_session"));
+    if(!s)return false;
+    const u=STATE.users.find(x=>x.id===s.id&&x.login===s.login&&x.role===s.role);
+    if(!u)return false;
+    activateUser(u);return true;
+  }catch{return false;}
+}
+function doLoginViewer(){
+  const viewer=STATE.users.find(x=>x.role==="viewer")||{id:"viewer",name:"Visualização",email:"",login:"visualizacao",passwordHash:"",role:"viewer"};
+  activateUser(viewer);
+}
+async function doLogin(){
+  const login=document.getElementById("inp-login").value.trim();
+  const pass=document.getElementById("inp-pass").value;
+  const u=STATE.users.find(x=>x.login===login);
+  const errEl=document.getElementById("login-err");
+  if(!u){errEl.textContent="Usuário não encontrado.";errEl.classList.remove("hidden");return;}
+  if(u.role!=="viewer"){
+    const h=await sha256(pass);
+    const stored=u.passwordHash||(u.password?await sha256(u.password):"");
+    if(h!==stored){errEl.textContent="Senha incorreta.";errEl.classList.remove("hidden");return;}
+  }
+  activateUser(u);
+}
+function doLogout(){
+  STATE.currentUser=null;
+  try{localStorage.removeItem("ig_session");}catch{}
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("login-page").classList.remove("hidden");
+  document.getElementById("inp-login").value="";
+  document.getElementById("inp-pass").value="";
+  document.getElementById("login-err").classList.add("hidden");
+  document.getElementById("nav-users").style.display="none";
+  document.getElementById("nav-platforms").style.display="none";
+  document.getElementById("btn-myaccount").style.display="none";
+}
+document.getElementById("inp-pass").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
+document.getElementById("inp-login").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════
+let currentPage="dashboard";
+function goPage(page){
+  currentPage=page;
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  const mc=document.getElementById("main-content");
+  mc.innerHTML="";mc.className="fade-in";
+  if(page==="dashboard")renderDashboard(mc);
+  else if(page==="calendar")renderCalendar(mc);
+  else if(page==="incidents")renderIncidents(mc);
+  else if(page==="reports")renderReports(mc);
+  else if(page==="users"){if(isAdmin())renderUsers(mc);else mc.innerHTML='<div class="no-access">🔒 Acesso restrito.</div>';}
+  else if(page==="platforms"){if(isAdmin())renderPlatforms(mc);else mc.innerHTML='<div class="no-access">🔒 Acesso restrito.</div>';}
+}
+
+// ═══════════════════════════════════════════════════════════
+// STREAK CALCULATOR
+// ═══════════════════════════════════════════════════════════
+function calcStreaks(){
+  const incDates=new Set(STATE.incidents.map(i=>i.date));
+  const today=new Date(); today.setHours(0,0,0,0);
+  // days without incident (from today backwards)
+  let streak=0,d=new Date(today);
+  while(true){
+    const ds=d.toISOString().split("T")[0];
+    if(incDates.has(ds))break;
+    streak++;d.setDate(d.getDate()-1);
+    if(streak>365)break;
+  }
+  // per platform
+  const platStreaks={};
+  STATE.platforms.forEach(p=>{
+    const pDates=new Set(STATE.incidents.filter(i=>i.platform===p.name).map(i=>i.date));
+    let s=0,dd=new Date(today);
+    while(true){const ds=dd.toISOString().split("T")[0];if(pDates.has(ds))break;s++;dd.setDate(dd.getDate()-1);if(s>365)break;}
+    platStreaks[p.name]=s;
+  });
+  return{total:streak,byPlatform:platStreaks};
+}
+
+// ═══════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function renderDashboard(mc){
+  const inc=STATE.incidents;
+  const total=inc.length;
+  const byPlat={};PLATFORMS().forEach(p=>{byPlat[p]=inc.filter(i=>i.platform===p).length;});
+  const totalMins=inc.reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);
+  const dtStr=fmtMins(totalMins);
+  const byMonth={};inc.forEach(i=>{const k=monthKey(i.date);byMonth[k]=(byMonth[k]||0)+1;});
+  const months=Object.entries(byMonth).sort();
+  const maxM=Math.max(...months.map(m=>m[1]),1);
+  const recent=[...inc].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,5);
+  const openCount=inc.filter(i=>i.status&&i.status!=="Resolvido").length;
+  const streaks=calcStreaks();
+
+  // trend: compare last 2 months
+  const lastMonths=months.slice(-2);
+  let trendHtml="";
+  if(lastMonths.length===2){
+    const diff=lastMonths[1][1]-lastMonths[0][1];
+    const pct=lastMonths[0][1]>0?Math.abs(Math.round((diff/lastMonths[0][1])*100)):0;
+    if(diff>0)trendHtml=`<span class="trend-up">▲ ${pct}% vs mês anterior</span>`;
+    else if(diff<0)trendHtml=`<span class="trend-down">▼ ${pct}% vs mês anterior</span>`;
+    else trendHtml=`<span class="trend-eq">= igual ao mês anterior</span>`;
+  }
+
+  mc.innerHTML=`
+    <div class="page-hdr"><div><div class="page-title">Dashboard</div><div class="page-sub">Visão geral de todas as ocorrências · ${trendHtml}</div></div></div>
+
+    <!-- Linha 1: 3 colunas fixas simétricas -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px;">
+      <div class="stat-card" style="--accent:#00c97a">
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Total de Ocorrências</div>
+        <div style="font-size:40px;font-weight:800;color:#00c97a;line-height:1">${total}</div>
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:6px">${trendHtml||"todos os registros"}</div>
+      </div>
+      <div class="stat-card" style="--accent:#ef4444">
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Em Aberto</div>
+        <div style="font-size:40px;font-weight:800;color:${openCount>0?"#ef4444":"#00c97a"};line-height:1">${openCount}</div>
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:6px">${openCount>0?"ocorrências pendentes":"tudo resolvido ✓"}</div>
+      </div>
+      <div class="stat-card" style="--accent:#f59e0b">
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Tempo Improdutivo</div>
+        <div style="font-size:${dtStr&&dtStr.length>5?"28":"40"}px;font-weight:800;color:#f59e0b;line-height:1;margin-top:${dtStr&&dtStr.length>5?"6":"0"}px">${dtStr||"—"}</div>
+        <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:6px">registrado com horários</div>
+      </div>
+    </div>
+
+    <!-- Linha 2: plataformas simétricas (sempre 4 colunas) -->
+    <div style="display:grid;grid-template-columns:repeat(${Math.min(STATE.platforms.length,4)},1fr);gap:12px;margin-bottom:14px;">
+      ${PLATFORMS().map(p=>`
+        <div class="stat-card" style="--accent:${platColor(p)}">
+          <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">${p}</div>
+          <div style="font-size:34px;font-weight:800;color:${platColor(p)};line-height:1">${byPlat[p]||0}</div>
+          <div class="mini-bar" style="margin-top:10px"><div class="mini-bar-fill" style="width:${total?Math.round(((byPlat[p]||0)/total)*100):0}%;background:${platColor(p)}"></div></div>
+          <div style="font-size:10px;color:#475569;font-family:Inter,sans-serif;margin-top:4px">${total?Math.round(((byPlat[p]||0)/total)*100):0}% do total</div>
+        </div>`).join("")}
+    </div>
+
+    <!-- Linha 3: streaks — mesma grid das plataformas -->
+    <div style="display:grid;grid-template-columns:repeat(${Math.min(STATE.platforms.length,4)},1fr);gap:12px;margin-bottom:14px;">
+      ${STATE.platforms.map(p=>`
+        <div class="streak-card" style="padding:16px 14px">
+          <div style="font-size:28px;font-weight:800;color:${p.color};line-height:1">${streaks.byPlatform[p.name]||0}</div>
+          <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-top:6px">${p.name}</div>
+          <div style="font-size:10px;color:#475569;font-family:Inter,sans-serif;margin-top:2px">dias sem problemas</div>
+        </div>`).join("")}
+    </div>
+
+    <!-- Linha 4: gráfico de meses + recentes (50/50) -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="card" style="max-height:360px;overflow-y:auto">
+        <div class="sec-title">Ocorrências por Mês</div>
+        ${months.map(([k,v])=>`
+          <div class="mbar-row">
+            <div class="mbar-label"><span>${monthLabel(k)}</span><span>${v}</span></div>
+            <div class="mbar-seg-wrap">
+              ${PLATFORMS().filter(p=>{return inc.filter(i=>i.platform===p&&monthKey(i.date)===k).length>0;}).map(p=>{const c=inc.filter(i=>i.platform===p&&monthKey(i.date)===k).length;return `<div class="mbar-seg" title="${p}: ${c}" style="flex:${c};background:${platColor(p)}"></div>`;}).join("")}
+              <div class="mbar-seg" style="flex:${maxM-v};background:#1e2d45"></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:3px;flex-wrap:wrap">
+              ${PLATFORMS().filter(p=>inc.filter(i=>i.platform===p&&monthKey(i.date)===k).length>0).map(p=>`<span style="font-size:10px;font-family:Inter,sans-serif;color:${platColor(p)}">● ${p}: ${inc.filter(i=>i.platform===p&&monthKey(i.date)===k).length}</span>`).join("")}
+            </div>
+          </div>`).join("")}
+      </div>
+      <div class="card" style="max-height:360px;overflow-y:auto">
+        <div class="sec-title">Ocorrências Recentes</div>
+        ${recent.map(i=>`
+          <div class="recent-item">
+            <div class="recent-dot" style="background:${platColor(i.platform)}"></div>
+            <div style="flex:1;min-width:0">
+              <div class="recent-meta">${fmtDate(i.date)} · ${i.platform} ${i.status&&i.status!=="Resolvido"?`<span class="badge ${STATUS_CSS[i.status]||""}" style="margin-left:4px">${i.status}</span>`:""}</div>
+              <div class="recent-reason">${esc(i.reason)}</div>
+              ${i.notes?`<div style="font-size:10px;color:#475569;margin-top:2px;white-space:normal">${esc(i.notes.substring(0,60))}${i.notes.length>60?"...":""}</div>`:""}
+            </div>
+          </div>`).join("")}
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// CALENDAR PAGE
+// ═══════════════════════════════════════════════════════════
+let calState={year:new Date().getFullYear(),month:new Date().getMonth(),platform:"Todas"};
+function renderCalendar(mc){
+  const {year,month,platform}=calState;
+  const inc=STATE.incidents.filter(i=>platform==="Todas"||i.platform===platform);
+  const incByDay={};
+  inc.forEach(i=>{const dt=new Date(i.date+"T00:00:00");if(dt.getFullYear()===year&&dt.getMonth()===month){const d=dt.getDate();incByDay[d]=(incByDay[d]||[]);incByDay[d].push(i);}});
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const todayD=new Date();const isThisMonth=todayD.getFullYear()===year&&todayD.getMonth()===month;
+  const todayDay=isThisMonth?todayD.getDate():null;
+
+  let cells="";
+  for(let i=0;i<firstDay;i++)cells+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const cnt=(incByDay[d]||[]).length;
+    const cls=cnt===0?"ok":cnt===1?"lv1":cnt<=3?"lv2":"lv3";
+    const isToday=d===todayDay;
+    cells+=`<div class="cal-day ${cls}${isToday?" today":""}" onclick="showDayDetail(${year},${month+1},${d})" title="${cnt} ocorrência(s)">
+      <span class="cal-num">${d}</span>
+      ${cnt>0?`<span class="cal-cnt">${cnt}x</span>`:""}
+    </div>`;
+  }
+
+  mc.innerHTML=`
+    <div class="page-hdr"><div><div class="page-title">📅 Calendário de Ocorrências</div><div class="page-sub">Verde = sem problema · Amarelo = 1 · Laranja = 2-3 · Vermelho = 4+</div></div></div>
+    <div class="filter-row">
+      <button class="btn-ghost btn-sm" onclick="calState.month--;if(calState.month<0){calState.month=11;calState.year--;};goPage('calendar')">◀</button>
+      <span style="font-size:15px;font-weight:700;color:#e2e8f0;padding:0 10px">${MONTH_FULL[month]} ${year}</span>
+      <button class="btn-ghost btn-sm" onclick="calState.month++;if(calState.month>11){calState.month=0;calState.year++;};goPage('calendar')">▶</button>
+      <select class="form-input" style="width:auto;min-width:140px" onchange="calState.platform=this.value;goPage('calendar')">
+        ${["Todas",...PLATFORMS()].map(p=>`<option value="${p}"${platform===p?" selected":""}>${p}</option>`).join("")}
+      </select>
+    </div>
+    <div class="card">
+      <div class="cal-grid" style="margin-bottom:8px">
+        ${WEEKDAYS.map(w=>`<div class="cal-head">${w}</div>`).join("")}
+      </div>
+      <div class="cal-grid">${cells}</div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <span style="font-size:11px;font-family:Inter,sans-serif;color:#64748b">Legenda:</span>
+      ${[["#0d2b1e","#00c97a55","Sem ocorrências"],["#1a3a1a","#86efac","1 ocorrência"],["#3b2005","#fbbf24","2-3 ocorrências"],["#3b0a0a","#f87171","4+ ocorrências"]].map(([bg,c,l])=>`<span style="display:flex;align-items:center;gap:5px;font-size:11px;font-family:Inter,sans-serif"><span style="width:14px;height:14px;background:${bg};border:1px solid ${c};border-radius:4px;display:inline-block"></span><span style="color:#64748b">${l}</span></span>`).join("")}
+    </div>`;
+}
+function showDayDetail(y,m,d){
+  const ds=`${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+  const dayInc=STATE.incidents.filter(i=>i.date===ds);
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">📅 ${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}/${y}</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    ${dayInc.length===0?`<div style="color:#475569;font-family:Inter,sans-serif;text-align:center;padding:20px">✅ Nenhuma ocorrência neste dia.</div>`:""}
+    ${dayInc.map(i=>`
+      <div style="background:#0b112088;border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid ${platColor(i.platform)}33">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span class="badge" style="background:${platColor(i.platform)}22;color:${platColor(i.platform)};border:1px solid ${platColor(i.platform)}44">${i.platform}</span>
+          <span class="badge ${STATUS_CSS[i.status||"Resolvido"]||""}">${i.status||"Resolvido"}</span>
+        </div>
+        <div style="font-size:13px;color:#cbd5e1;margin-bottom:6px">${esc(i.reason)}</div>
+        ${i.impact?`<div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif">Impacto: ${esc(i.impact)}</div>`:""}
+        ${i.reporter?`<div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif">Reportado por: ${esc(i.reporter)}</div>`:""}
+        ${i.timeDown&&i.timeBack?`<div style="font-size:11px;color:#f59e0b;font-family:Inter,sans-serif">⏱️ ${i.timeDown} – ${i.timeBack} (${fmtMins(calcMins(i.timeDown,i.timeBack))})</div>`:""}
+        ${i.notes?`<div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:6px;padding-top:6px;border-top:1px solid #1e2d45">📝 ${esc(i.notes)}</div>`:""}
+        ${canEdit()?`<div style="margin-top:8px"><button class="btn-ghost btn-sm" onclick="closeModal();openIncidentModal('${i.id}')">✏️ Editar</button></div>`:""}
+      </div>`).join("")}
+    ${canEdit()?`<div style="margin-top:6px"><button class="btn-primary" onclick="closeModal();openIncidentModal(null,'${ds}')">+ Registrar ocorrência neste dia</button></div>`:""}
+  `;
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+
+// ═══════════════════════════════════════════════════════════
+// INCIDENTS PAGE
+// ═══════════════════════════════════════════════════════════
+let incFilter={platform:"Todas",month:"Todos",status:"Todos"};
+function renderIncidents(mc){
+  const months=[...new Set(STATE.incidents.map(i=>monthKey(i.date)))].sort();
+  const filtered=STATE.incidents.filter(i=>{
+    if(incFilter.platform!=="Todas"&&i.platform!==incFilter.platform)return false;
+    if(incFilter.month!=="Todos"&&monthKey(i.date)!==incFilter.month)return false;
+    if(incFilter.status!=="Todos"&&(i.status||"Resolvido")!==incFilter.status)return false;
+    return true;
+  }).sort((a,b)=>b.date.localeCompare(a.date));
+
+  mc.innerHTML=`
+    <div class="page-hdr">
+      <div><div class="page-title">Ocorrências</div><div class="page-sub">${filtered.length} registro${filtered.length!==1?"s":""} encontrado${filtered.length!==1?"s":""}</div></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        ${canEdit()?`<button class="btn-primary" onclick="openIncidentModal(null)">+ Nova Ocorrência</button>`:""}
+        ${canExport()?`<button class="btn-ghost" onclick="exportCSV()">⬇️ CSV</button>`:""}
+        ${canExport()?`<button class="btn-ghost" onclick="exportXLSX()">📊 Planilha</button>`:""}
+      </div>
+    </div>
+    <div class="filter-row">
+      <div class="chips-wrap" style="margin-bottom:0">
+        ${["Todas",...PLATFORMS()].map(p=>`<button class="chip${incFilter.platform===p?" sel":""}" onclick="setIncFilter('platform','${p}')">${p}</button>`).join("")}
+      </div>
+      <select class="form-input" style="width:auto;min-width:150px" onchange="setIncFilter('month',this.value)">
+        <option value="Todos">Todos os meses</option>
+        ${months.map(m=>`<option value="${m}"${incFilter.month===m?" selected":""}>${monthLabel(m)}</option>`).join("")}
+      </select>
+      <select class="form-input" style="width:auto;min-width:150px" onchange="setIncFilter('status',this.value)">
+        <option value="Todos">Todos os status</option>
+        ${STATUS_LIST.map(s=>`<option value="${s}"${incFilter.status===s?" selected":""}>${s}</option>`).join("")}
+      </select>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Data</th><th>Plataforma</th><th>Motivo</th><th>Status</th><th>Impacto</th><th>Improdutivo</th><th>Reportado por</th>
+          ${canEdit()?"<th>Ações</th>":""}
+        </tr></thead>
+        <tbody>
+          ${filtered.length===0?`<tr><td colspan="${canEdit()?8:7}" style="text-align:center;color:#334155;padding:40px">Nenhuma ocorrência encontrada.</td></tr>`:""}
+          ${filtered.map(i=>{
+            const dt=fmtMins(calcMins(i.timeDown,i.timeBack));
+            const st=i.status||"Resolvido";
+            return `<tr>
+              <td>${fmtDate(i.date)}</td>
+              <td><span class="badge" style="background:${platColor(i.platform)}22;color:${platColor(i.platform)};border:1px solid ${platColor(i.platform)}44">${i.platform}</span></td>
+              <td style="color:#cbd5e1;max-width:240px">${esc(i.reason)}${i.notes?` <span style="font-size:10px;color:#475569" title="${esc(i.notes)}">📝</span>`:""}</td>
+              <td><span class="badge ${STATUS_CSS[st]||""}">${st}</span></td>
+              <td style="color:#64748b;font-size:11px">${i.impact||"—"}</td>
+              <td style="color:${dt?"#f59e0b":"#334155"};font-weight:${dt?600:400}">${dt||"—"}</td>
+              <td style="color:#64748b;font-size:11px">${esc(i.reporter)||"—"}</td>
+              ${canEdit()?`<td><div style="display:flex;gap:5px"><button class="btn-ghost btn-sm" onclick="openIncidentModal('${i.id}')">✏️</button><button class="btn-danger btn-sm" onclick="deleteIncident('${i.id}')">🗑️</button></div></td>`:""}
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>`;
+}
+function setIncFilter(key,val){incFilter[key]=val;goPage("incidents");}
+function deleteIncident(id){
+  if(!confirm("Excluir esta ocorrência?"))return;
+  STATE.incidents=STATE.incidents.filter(i=>i.id!==id);
+  saveIncidents();goPage("incidents");
+}
+
+// ═══════════════════════════════════════════════════════════
+// INCIDENT MODAL
+// ═══════════════════════════════════════════════════════════
+let _inc={};
+function openIncidentModal(id,prefillDate){
+  const i=id?STATE.incidents.find(x=>x.id===id):null;
+  _inc={
+    id:id||null,platform:i?.platform||PLATFORMS()[0]||"3C+",date:i?.date||(prefillDate||todayStr()),
+    reason:i?.reason||"",customReason:"",showCustom:false,
+    noDown:!i?.timeDown,noBack:!i?.timeBack,timeDown:i?.timeDown||"",timeBack:i?.timeBack||"",
+    status:i?.status||"Aberto",impact:i?.impact||"",reporter:i?.reporter||"",notes:i?.notes||""
+  };
+  renderIncModal();
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+function renderIncModal(){
+  const m=_inc;const reasons=getReasons(m.platform);
+  const dt=fmtMins(calcMins(m.timeDown,m.timeBack));
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">${m.id?"Editar Ocorrência":"Nova Ocorrência"}</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Plataforma</label>
+        <select class="form-input" onchange="_inc.platform=this.value;_inc.reason='';_inc.showCustom=false;renderIncModal()">
+          ${PLATFORMS().map(p=>`<option value="${p}"${m.platform===p?" selected":""}>${p}</option>`).join("")}
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Data</label>
+        <input class="form-input" type="date" value="${m.date}" onchange="_inc.date=this.value"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Motivo</label>
+      <div class="chips-wrap">
+        ${reasons.map(r=>`<button class="chip${m.reason===r&&!m.showCustom?" sel":""}" onclick="_inc.reason='${esc(r).replace(/'/g,"\'")}';_inc.showCustom=false;renderIncModal()">${esc(r)}</button>`).join("")}
+        <button class="chip${m.showCustom?" sel":""}" style="border-style:dashed" onclick="_inc.showCustom=true;_inc.reason='';renderIncModal()">+ Novo motivo</button>
+      </div>
+      ${m.showCustom?`<input class="form-input" placeholder="Descreva o novo motivo..." value="${esc(m.customReason)}" oninput="_inc.customReason=this.value"/>`:""}
+      ${!m.showCustom&&m.reason?`<div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif;padding:7px 11px;background:#0b112055;border-radius:6px;border:1px solid #1e2d4560">Selecionado: <span style="color:#94a3b8">${esc(m.reason)}</span></div>`:""}
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Status</label>
+        <select class="form-input" onchange="_inc.status=this.value">
+          ${STATUS_LIST.map(s=>`<option value="${s}"${m.status===s?" selected":""}>${s}</option>`).join("")}
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Impacto (agentes afetados)</label>
+        <select class="form-input" onchange="_inc.impact=this.value">
+          <option value="">Não informado</option>
+          ${IMPACT_LIST.map(s=>`<option value="${s}"${m.impact===s?" selected":""}>${s}</option>`).join("")}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Reportado por</label>
+      <input class="form-input" type="text" placeholder="Nome do agente ou supervisor" value="${esc(m.reporter)}" oninput="_inc.reporter=this.value"/>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Horário que caiu</label>
+        <div class="time-row">
+          <input class="form-input" type="time" value="${m.timeDown}" ${m.noDown?"disabled":""} oninput="_inc.timeDown=this.value;renderIncModal()"/>
+          <label class="chk-label"><input type="checkbox" ${m.noDown?"checked":""} onchange="_inc.noDown=this.checked;if(this.checked){_inc.timeDown='';};renderIncModal()"/> Não tem</label>
+        </div>
+      </div>
+      <div>
+        <label class="form-label">Horário que voltou</label>
+        <div class="time-row">
+          <input class="form-input" type="time" value="${m.timeBack}" ${m.noBack?"disabled":""} oninput="_inc.timeBack=this.value;renderIncModal()"/>
+          <label class="chk-label"><input type="checkbox" ${m.noBack?"checked":""} onchange="_inc.noBack=this.checked;if(this.checked){_inc.timeBack='';};renderIncModal()"/> Não tem</label>
+        </div>
+      </div>
+    </div>
+    ${dt&&!m.noDown&&!m.noBack?`<div class="dt-preview">⏱️ Tempo improdutivo: <strong>${dt}</strong></div>`:""}
+    <div class="form-group">
+      <label class="form-label">Observações / Nº do chamado / O que foi feito</label>
+      <textarea class="form-input" rows="3" placeholder="Ex: Chamado #12345 aberto com o suporte às 10h. Fornecedor respondeu em 2h..." oninput="_inc.notes=this.value" style="resize:vertical">${esc(m.notes)}</textarea>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveIncModal()">Salvar Ocorrência</button>
+    </div>`;
+}
+function saveIncModal(){
+  const m=_inc;
+  const finalReason=m.showCustom?m.customReason:m.reason;
+  if(!finalReason.trim()){alert("Selecione ou digite um motivo.");return;}
+  if(m.showCustom&&m.customReason.trim()){
+    if(!STATE.customReasons[m.platform])STATE.customReasons[m.platform]=[];
+    if(!STATE.customReasons[m.platform].includes(m.customReason.trim()))STATE.customReasons[m.platform].push(m.customReason.trim());
+    saveReasons();
+  }
+  const rec={id:m.id||uid(),platform:m.platform,date:m.date,reason:finalReason.trim(),
+    timeDown:m.noDown?null:(m.timeDown||null),timeBack:m.noBack?null:(m.timeBack||null),
+    status:m.status,impact:m.impact,reporter:m.reporter,notes:m.notes};
+  if(m.id){STATE.incidents=STATE.incidents.map(i=>i.id===m.id?rec:i);}
+  else{STATE.incidents.push(rec);}
+  saveIncidents();closeModal();
+  if(currentPage==="incidents")goPage("incidents");
+  else if(currentPage==="calendar")goPage("calendar");
+  else goPage("dashboard");
+}
+
+// ═══════════════════════════════════════════════════════════
+// REPORTS
+// ═══════════════════════════════════════════════════════════
+let repTab="geral";
+function renderReports(mc){
+  mc.innerHTML=`
+    <div class="page-hdr"><div><div class="page-title">Relatórios & Comparativos</div></div><div style="display:flex;gap:8px">${canExport()?`<button class="btn-ghost" onclick="openPrintModal()">🖨️ Imprimir</button>`:""}</div></div>
+    <div class="tab-wrap">
+      ${[["geral","📊 Geral"],["mensal","📅 Por Mês"],["plataforma","🖥️ Por Plataforma"],["tempo","⏱️ Tempo"],["tendencia","📈 Tendência"],["sla","📋 SLA"]].map(([k,l])=>`<button class="chip${repTab===k?" sel":""}" onclick="repTab='${k}';renderReports(document.getElementById('main-content'))">${l}</button>`).join("")}
+    </div>
+    <div id="rep-body"></div>`;
+  renderRepBody();
+}
+function renderRepBody(){
+  const rb=document.getElementById("rep-body");if(!rb)return;
+  const inc=STATE.incidents;
+
+  if(repTab==="geral"){
+    const byMonth={};
+    inc.forEach(i=>{const k=monthKey(i.date);if(!byMonth[k])byMonth[k]={total:0,byP:{}};byMonth[k].total++;byMonth[k].byP[i.platform]=(byMonth[k].byP[i.platform]||0)+1;});
+    const months=Object.entries(byMonth).sort();const maxM=Math.max(...months.map(m=>m[1].total),1);
+    const freq={};inc.forEach(i=>{freq[i.reason]=(freq[i.reason]||0)+1;});
+    const topR=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10);
+    rb.innerHTML=`<div class="grid-2">
+      <div class="card">
+        <div class="sec-title">Comparativo Mensal</div>
+        ${months.map(([k,v])=>`<div class="mbar-row">
+          <div class="mbar-label"><span>${monthLabel(k)}</span><span style="color:#00c97a;font-weight:600">${v.total}</span></div>
+          <div class="mbar-seg-wrap">
+            ${PLATFORMS().filter(p=>v.byP[p]).map(p=>`<div class="mbar-seg" title="${p}: ${v.byP[p]}" style="flex:${v.byP[p]};background:${platColor(p)}"></div>`).join("")}
+            <div class="mbar-seg" style="flex:${maxM-v.total};background:#1e2d45"></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:3px;flex-wrap:wrap">
+            ${PLATFORMS().filter(p=>v.byP[p]).map(p=>`<span style="font-size:10px;font-family:Inter,sans-serif;color:${platColor(p)}">● ${p}: ${v.byP[p]}</span>`).join("")}
+          </div></div>`).join("")}
+      </div>
+      <div class="card">
+        <div class="sec-title">Top Motivos Mais Frequentes</div>
+        ${topR.map(([r,c],i)=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+          <span style="font-size:11px;color:#334155;width:20px;text-align:right;font-family:Inter,sans-serif">#${i+1}</span>
+          <div style="flex:1;font-size:11px;color:#94a3b8;font-family:Inter,sans-serif">${esc(r)}</div>
+          <span style="font-size:13px;font-weight:700;color:#00c97a">${c}x</span>
+        </div>`).join("")}
+      </div>
+    </div>`;
+  }
+
+  else if(repTab==="mensal"){
+    const byMonth={};
+    inc.forEach(i=>{const k=monthKey(i.date);if(!byMonth[k])byMonth[k]=[];byMonth[k].push(i);});
+    rb.innerHTML=Object.entries(byMonth).sort().map(([k,mis])=>{
+      const totalMins=mis.reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);
+      const dtStr=fmtMins(totalMins);const byP={};mis.forEach(i=>{byP[i.platform]=(byP[i.platform]||0)+1;});
+      return `<div class="card" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div><div style="font-size:17px;font-weight:700;color:#e2e8f0">${monthLabel(k)}</div><div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:2px">${mis.length} ocorrência${mis.length!==1?"s":""}</div></div>
+          ${dtStr?`<span class="badge" style="background:#f59e0b18;color:#f59e0b;border:1px solid #f59e0b33">⏱️ ${dtStr} improdutivos</span>`:""}
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px">
+          ${PLATFORMS().filter(p=>byP[p]).map(p=>`<span style="font-size:11px;font-family:Inter,sans-serif"><span style="color:${platColor(p)}">●</span> <span style="color:#94a3b8">${p}: <strong style="color:${platColor(p)}">${byP[p]}</strong></span></span>`).join("")}
+        </div>
+        <div style="max-height:200px;overflow-y:auto">
+        <table><thead><tr><th>Dia</th><th>Plataforma</th><th>Motivo</th><th>Status</th><th>Improdutivo</th></tr></thead><tbody>
+          ${mis.sort((a,b)=>a.date.localeCompare(b.date)).map(i=>`<tr>
+            <td>${fmtDate(i.date)}</td>
+            <td style="color:${platColor(i.platform)};font-size:11px">● ${i.platform}</td>
+            <td style="color:#94a3b8;font-size:11px">${esc(i.reason)}</td>
+            <td><span class="badge ${STATUS_CSS[i.status||"Resolvido"]||""}" style="font-size:9px">${i.status||"Resolvido"}</span></td>
+            <td style="color:#f59e0b;font-size:11px">${fmtMins(calcMins(i.timeDown,i.timeBack))||"—"}</td>
+          </tr>`).join("")}
+        </tbody></table></div>
+      </div>`;
+    }).join("");
+  }
+
+  else if(repTab==="plataforma"){
+    rb.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
+      ${STATE.platforms.map(p=>{
+        const pi=inc.filter(i=>i.platform===p.name);
+        const totalMins=pi.reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);
+        const dtStr=fmtMins(totalMins);const byM={};pi.forEach(i=>{const k=monthKey(i.date);byM[k]=(byM[k]||0)+1;});
+        const freq={};pi.forEach(i=>{freq[i.reason]=(freq[i.reason]||0)+1;});
+        const top=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,3);
+        const streaks=calcStreaks();
+        return `<div class="card" style="border-top:3px solid ${p.color}">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span style="font-size:17px;font-weight:700;color:${p.color}">${p.name}</span>
+            <span style="font-size:28px;font-weight:800;color:#e2e8f0">${pi.length}</span>
+          </div>
+          <div style="font-size:11px;color:#00c97a;font-family:Inter,sans-serif;margin-bottom:8px">🔥 ${streaks.byPlatform[p.name]||0} dias sem problemas</div>
+          ${dtStr?`<div style="font-size:11px;color:#f59e0b;font-family:Inter,sans-serif;margin-bottom:8px">⏱️ ${dtStr} improdutivos registrados</div>`:""}
+          <div class="sec-title">Por mês</div>
+          ${Object.entries(byM).sort().map(([k,v])=>`<div class="plat-stat-row"><span>${monthLabel(k)}</span><span style="color:${p.color};font-weight:600">${v}</span></div>`).join("")||`<div style="color:#334155;font-size:11px;font-family:Inter,sans-serif">Nenhum registro.</div>`}
+          ${top.length?`<div class="sec-title" style="margin-top:12px">Top motivos</div>${top.map(([r,c])=>`<div style="font-size:10px;color:#64748b;font-family:Inter,sans-serif;padding:2px 0">${c}x — ${esc(r)}</div>`).join("")}`:""}
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
+  else if(repTab==="tempo"){
+    const withTime=inc.filter(i=>i.timeDown&&i.timeBack);
+    const total=inc.reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);
+    // by platform
+    const byPlatMin={};STATE.platforms.forEach(p=>{byPlatMin[p.name]=inc.filter(i=>i.platform===p.name).reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);});
+    rb.innerHTML=`
+      <div class="grid-stats" style="margin-bottom:16px">
+        <div class="stat-card" style="--accent:#f59e0b"><div style="font-size:24px;font-weight:800;color:#f59e0b">${fmtMins(total)||"0min"}</div><div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif;margin-top:3px">Total improdutivo registrado</div></div>
+        ${STATE.platforms.filter(p=>byPlatMin[p.name]>0).map(p=>`<div class="stat-card" style="--accent:${p.color}"><div style="font-size:20px;font-weight:800;color:${p.color}">${fmtMins(byPlatMin[p.name])}</div><div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif;margin-top:3px">${p.name}</div></div>`).join("")}
+      </div>
+      <div class="alert alert-info" style="margin-bottom:14px">ℹ️ Fev/Mar/Abr 2025 não possuem horários registrados. Cálculos referentes a Mai/2025 em diante.</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Data</th><th>Plataforma</th><th>Queda</th><th>Retorno</th><th>Improdutivo</th><th>Impacto</th></tr></thead>
+        <tbody>
+          ${withTime.length===0?`<tr><td colspan="6" style="text-align:center;color:#334155;padding:30px">Nenhum incidente com horários registrados.</td></tr>`:""}
+          ${withTime.map(i=>`<tr>
+            <td>${fmtDate(i.date)}</td>
+            <td><span style="color:${platColor(i.platform)}">● ${i.platform}</span></td>
+            <td style="font-family:Inter,sans-serif">${i.timeDown}</td>
+            <td style="font-family:Inter,sans-serif">${i.timeBack}</td>
+            <td style="color:#f59e0b;font-weight:600">${fmtMins(calcMins(i.timeDown,i.timeBack))}</td>
+            <td style="color:#64748b;font-size:11px">${i.impact||"—"}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div>`;
+  }
+
+  else if(repTab==="tendencia"){
+    const byMonth={};
+    inc.forEach(i=>{const k=monthKey(i.date);byMonth[k]=(byMonth[k]||0)+1;});
+    const months=Object.entries(byMonth).sort();
+    const maxV=Math.max(...months.map(m=>m[1]),1);
+    const chartH=200;
+    const bars=months.map(([k,v],idx)=>{
+      const barH=Math.round((v/maxV)*chartH);
+      const prev=idx>0?months[idx-1][1]:v;
+      const color=v>prev?"#ef4444":v<prev?"#00c97a":"#f59e0b";
+      return {k,v,barH,color};
+    });
+    rb.innerHTML=`
+      <div class="card" style="margin-bottom:14px">
+        <div class="sec-title">Tendência de Ocorrências por Mês</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;height:${chartH+40}px;padding-top:10px">
+          ${bars.map(({k,v,barH,color})=>`
+            <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px">
+              <span style="font-size:11px;font-weight:700;color:${color}">${v}</span>
+              <div style="width:100%;background:${color};border-radius:6px 6px 0 0;height:${barH}px;min-height:4px;transition:height .3s"></div>
+              <span style="font-size:9px;color:#475569;font-family:Inter,sans-serif;text-align:center">${monthLabel(k).split(" ")[0].slice(0,3)}<br>${monthLabel(k).split(" ")[1]}</span>
+            </div>`).join("")}
+        </div>
+        <div style="display:flex;gap:14px;margin-top:10px;flex-wrap:wrap">
+          ${[["#00c97a","Melhora (↓)"],["#ef4444","Piora (↑)"],["#f59e0b","Estável"]].map(([c,l])=>`<span style="font-size:11px;font-family:Inter,sans-serif;color:#64748b;display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:${c};border-radius:2px;display:inline-block"></span>${l}</span>`).join("")}
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="sec-title">Resumo da Tendência</div>
+          ${months.map(([k,v],i)=>{
+            const prev=i>0?months[i-1][1]:null;
+            let trend="";
+            if(prev!==null){const d=v-prev;trend=d>0?`<span class="trend-up">▲ +${d}</span>`:d<0?`<span class="trend-down">▼ ${d}</span>`:`<span class="trend-eq">= igual</span>`;}
+            return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1e2d4530;font-family:Inter,sans-serif;font-size:12px">
+              <span style="color:#94a3b8">${monthLabel(k)}</span>
+              <span style="display:flex;gap:8px;align-items:center"><strong style="color:#e2e8f0">${v}</strong>${trend}</span>
+            </div>`;
+          }).join("")}
+        </div>
+        <div class="card">
+          <div class="sec-title">Pior e Melhor Mês</div>
+          ${months.length>0?`
+            <div style="margin-bottom:14px">
+              <div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif">🔴 Pior mês</div>
+              <div style="font-size:18px;font-weight:700;color:#ef4444">${monthLabel(months.reduce((a,b)=>a[1]>b[1]?a:b)[0])}</div>
+              <div style="font-size:13px;color:#94a3b8">${months.reduce((a,b)=>a[1]>b[1]?a:b)[1]} ocorrências</div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:#64748b;font-family:Inter,sans-serif">🟢 Melhor mês</div>
+              <div style="font-size:18px;font-weight:700;color:#00c97a">${monthLabel(months.reduce((a,b)=>a[1]<b[1]?a:b)[0])}</div>
+              <div style="font-size:13px;color:#94a3b8">${months.reduce((a,b)=>a[1]<b[1]?a:b)[1]} ocorrências</div>
+            </div>`:"<div style='color:#334155;font-size:12px;font-family:Inter,sans-serif'>Sem dados suficientes.</div>"}
+        </div>
+      </div>`;
+  }
+
+  else if(repTab==="sla"){
+    rb.innerHTML=`
+      <div class="card" style="margin-bottom:14px">
+        <div class="sec-title">Registro de SLA por Fornecedor</div>
+        <div class="alert alert-info" style="margin-bottom:14px">📋 Acompanhe se cada ocorrência foi resolvida dentro do prazo combinado com o fornecedor. Edite uma ocorrência e use o campo "Observações" para registrar o número do chamado e o prazo de resposta.</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Data</th><th>Plataforma</th><th>Status</th><th>Tempo improdutivo</th><th>Observações / Chamado</th><th>Reportado por</th></tr></thead>
+          <tbody>
+            ${inc.filter(i=>i.notes||i.status==="Aguardando fornecedor").length===0?`<tr><td colspan="6" style="text-align:center;color:#334155;padding:30px">Nenhum registro com observações ainda.</td></tr>`:""}
+            ${inc.filter(i=>i.notes||i.status==="Aguardando fornecedor").sort((a,b)=>b.date.localeCompare(a.date)).map(i=>`<tr>
+              <td>${fmtDate(i.date)}</td>
+              <td><span style="color:${platColor(i.platform)};font-size:11px">● ${i.platform}</span></td>
+              <td><span class="badge ${STATUS_CSS[i.status||"Resolvido"]||""}">${i.status||"Resolvido"}</span></td>
+              <td style="color:#f59e0b;font-size:11px">${fmtMins(calcMins(i.timeDown,i.timeBack))||"—"}</td>
+              <td style="color:#94a3b8;font-size:11px;max-width:200px">${esc(i.notes)||"—"}</td>
+              <td style="color:#64748b;font-size:11px">${esc(i.reporter)||"—"}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table></div>
+      </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// MINHA CONTA
+// ═══════════════════════════════════════════════════════════
+function openMyAccount(){
+  const u=STATE.currentUser;
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">👤 Minha Conta</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    <div style="margin-bottom:16px;padding:13px;background:#0b112088;border-radius:10px;border:1px solid #1e2d4560">
+      <div style="font-size:13px;color:#94a3b8;font-family:Inter,sans-serif"><strong style="color:#e2e8f0">${esc(u.name)}</strong></div>
+      <div style="font-size:11px;color:#475569;font-family:Inter,sans-serif;margin-top:2px">${esc(u.email)}</div>
+      <div style="margin-top:5px"><span class="badge" style="background:#00c97a22;color:#00c97a;border:1px solid #00c97a44">Administradora</span></div>
+    </div>
+    <div style="font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:12px">Alterar Senha</div>
+    <div class="form-group"><label class="form-label">Senha atual</label><input class="form-input" type="password" id="acc-old" placeholder="Digite a senha atual"/></div>
+    <div class="form-group"><label class="form-label">Nova senha</label><input class="form-input" type="password" id="acc-new" placeholder="Nova senha (mín. 4 caracteres)"/></div>
+    <div class="form-group"><label class="form-label">Confirmar nova senha</label><input class="form-input" type="password" id="acc-conf" placeholder="Repita a nova senha"/></div>
+    <div id="acc-err" class="alert alert-err hidden"></div>
+    <div id="acc-ok" class="alert alert-ok hidden"></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn-ghost" onclick="closeModal()">Fechar</button>
+      <button class="btn-primary" onclick="saveMyPassword()">Salvar Nova Senha</button>
+    </div>`;
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+async function saveMyPassword(){
+  const oldP=document.getElementById("acc-old").value;
+  const newP=document.getElementById("acc-new").value;
+  const conf=document.getElementById("acc-conf").value;
+  const errEl=document.getElementById("acc-err");const okEl=document.getElementById("acc-ok");
+  errEl.classList.add("hidden");okEl.classList.add("hidden");
+  const oldHash=await sha256(oldP);
+  const stored=STATE.currentUser.passwordHash||(STATE.currentUser.password?await sha256(STATE.currentUser.password):"");
+  if(oldHash!==stored){errEl.textContent="Senha atual incorreta.";errEl.classList.remove("hidden");return;}
+  if(newP.length<4){errEl.textContent="A nova senha deve ter pelo menos 4 caracteres.";errEl.classList.remove("hidden");return;}
+  if(newP!==conf){errEl.textContent="A confirmação não confere com a nova senha.";errEl.classList.remove("hidden");return;}
+  const newHash=await sha256(newP);
+  STATE.users=STATE.users.map(u=>u.id===STATE.currentUser.id?{...u,passwordHash:newHash,password:undefined}:u);
+  STATE.currentUser={...STATE.currentUser,passwordHash:newHash};
+  saveUsers();
+  okEl.textContent="✅ Senha alterada com sucesso!";okEl.classList.remove("hidden");
+  document.getElementById("acc-old").value="";document.getElementById("acc-new").value="";document.getElementById("acc-conf").value="";
+}
+
+// ═══════════════════════════════════════════════════════════
+// USERS PAGE
+// ═══════════════════════════════════════════════════════════
+function renderUsers(mc){
+  mc.innerHTML=`
+    <div class="page-hdr">
+      <div><div class="page-title">Gerenciar Usuários</div><div class="page-sub">${STATE.users.length} usuário${STATE.users.length!==1?"s":""} cadastrado${STATE.users.length!==1?"s":""}</div></div>
+      <button class="btn-primary" onclick="openUserModal(null)">+ Novo Usuário</button>
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Nome</th><th>Login</th><th>E-mail</th><th>Perfil</th><th>Ações</th></tr></thead>
+      <tbody>
+        ${STATE.users.map(u=>`<tr>
+          <td style="color:#e2e8f0">${esc(u.name)}</td>
+          <td style="color:#94a3b8">${esc(u.login)}</td>
+          <td style="color:#64748b;font-size:11px">${esc(u.email)||"—"}</td>
+          <td><span class="badge" style="background:${u.role==="admin"?"#00c97a22":u.role==="user"?"#6366f122":"#1e2d45"};color:${u.role==="admin"?"#00c97a":u.role==="user"?"#818cf8":"#64748b"};border:1px solid ${u.role==="admin"?"#00c97a44":u.role==="user"?"#6366f144":"#1e2d45"}">${u.role==="admin"?"Admin":u.role==="user"?"Operador":"Visualização"}</span></td>
+          <td><div style="display:flex;gap:6px">
+            <button class="btn-ghost btn-sm" onclick="openUserModal('${u.id}')">✏️ Editar</button>
+            ${u.id!==STATE.currentUser.id?`<button class="btn-danger btn-sm" onclick="deleteUser('${u.id}')">🗑️</button>`:""}
+          </div></td>
+        </tr>`).join("")}
+      </tbody>
+    </table></div>`;
+}
+function deleteUser(id){
+  if(!confirm("Excluir este usuário?"))return;
+  STATE.users=STATE.users.filter(u=>u.id!==id);saveUsers();goPage("users");
+}
+let _userModal={};
+function openUserModal(id){
+  const u=id?STATE.users.find(x=>x.id===id):null;
+  _userModal={id:id||null,name:u?.name||"",login:u?.login||"",email:u?.email||"",password:u?.password||"",role:(u?.role==="admin"||!u?.role)?"user":u?.role};
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">${id?"Editar Usuário":"Novo Usuário"}</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    ${[["Nome completo","name","text","Ex: Maria Silva"],["Login","login","text","Ex: maria.silva"],["E-mail","email","email","Ex: maria@igreenenergy.com.br"],["Senha","password","password","Deixe em branco para acesso público"]].map(([l,f,t,ph])=>`
+      <div class="form-group">
+        <label class="form-label">${l}</label>
+        <input class="form-input" type="${t}" placeholder="${ph}" value="${esc(_userModal[f])}" oninput="_userModal['${f}']=this.value"/>
+      </div>`).join("")}
+    <div class="form-group">
+      <label class="form-label">Perfil de acesso</label>
+      <select class="form-input" onchange="_userModal.role=this.value">
+        <option value="viewer"${_userModal.role==="viewer"?" selected":""}>Visualização (somente leitura)</option>
+        <option value="user"${_userModal.role==="user"?" selected":""}>Operador (visualiza dados)</option>
+      </select>
+      <div style="margin-top:6px;font-size:10px;color:#475569;font-family:Inter,sans-serif">⚠️ Nenhum perfil criado aqui terá acesso para adicionar ocorrências, criar plataformas ou gerenciar usuários.</div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveUserModal()">Salvar Usuário</button>
+    </div>`;
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+async function saveUserModal(){
+  const m=_userModal;
+  if(!m.name.trim()||!m.login.trim()){alert("Nome e login são obrigatórios.");return;}
+  const safeRole=m.role==="admin"?"user":m.role;
+  const ph=m.password?await sha256(m.password):"";
+  const existing=m.id?STATE.users.find(u=>u.id===m.id):null;
+  const finalHash=ph||(existing?.passwordHash||"");
+  const rec={id:m.id||uid(),name:m.name.trim(),login:m.login.trim(),email:m.email.trim(),passwordHash:finalHash,role:safeRole};
+  if(m.id){STATE.users=STATE.users.map(u=>u.id===m.id?rec:u);}else{STATE.users.push(rec);}
+  saveUsers();closeModal();goPage("users");
+}
+
+// ═══════════════════════════════════════════════════════════
+// PLATFORMS PAGE
+// ═══════════════════════════════════════════════════════════
+let _platModal={id:null,name:"",color:"#06b6d4",reasons:[]};
+let _newReason="";
+function renderPlatforms(mc){
+  mc.innerHTML=`
+    <div class="page-hdr">
+      <div><div class="page-title">🖥️ Gerenciar Plataformas</div><div class="page-sub">Crie, edite e exclua plataformas e seus motivos de erro</div></div>
+      <button class="btn-primary" onclick="openPlatModal(null)">+ Nova Plataforma</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+      ${STATE.platforms.map(p=>{
+        const count=STATE.incidents.filter(i=>i.platform===p.name).length;
+        return `<div class="card" style="border-top:3px solid ${p.color}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:12px;height:12px;border-radius:50%;background:${p.color};flex-shrink:0"></div>
+              <span style="font-size:16px;font-weight:700;color:#e2e8f0">${esc(p.name)}</span>
+            </div>
+            <span style="font-size:11px;color:#475569;font-family:Inter,sans-serif">${count} ocorrência${count!==1?"s":""}</span>
+          </div>
+          <div style="margin-bottom:12px">
+            <div class="sec-title" style="margin-bottom:6px">Motivos (${p.reasons.length})</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;max-height:80px;overflow-y:auto">
+              ${p.reasons.length?p.reasons.map(r=>`<span class="chip" style="font-size:10px;padding:2px 8px;cursor:default">${esc(r)}</span>`).join(""):"<span style='font-size:11px;color:#334155;font-family:Inter,sans-serif'>Nenhum motivo.</span>"}
+            </div>
+          </div>
+          <div style="display:flex;gap:7px">
+            <button class="btn-ghost btn-sm" style="flex:1" onclick="openPlatModal('${p.id}')">✏️ Editar</button>
+            ${count===0?`<button class="btn-danger btn-sm" onclick="deletePlatform('${p.id}')">🗑️ Excluir</button>`:`<span style="font-size:10px;color:#334155;font-family:Inter,sans-serif;align-self:center">Remova as ocorrências antes de excluir</span>`}
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+}
+function deletePlatform(id){
+  const p=STATE.platforms.find(x=>x.id===id);if(!p)return;
+  const used=STATE.incidents.filter(i=>i.platform===p.name).length;
+  if(used>0){alert(`Não é possível excluir "${p.name}": há ${used} ocorrência(s) vinculada(s).`);return;}
+  if(!confirm(`Excluir a plataforma "${p.name}"?`))return;
+  STATE.platforms=STATE.platforms.filter(x=>x.id!==id);savePlatforms();goPage("platforms");
+}
+function openPlatModal(id){
+  const p=id?STATE.platforms.find(x=>x.id===id):null;
+  _platModal={id:id||null,name:p?.name||"",color:p?.color||"#06b6d4",reasons:p?[...p.reasons]:[]};
+  _newReason="";renderPlatModal();
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+function renderPlatModal(){
+  const m=_platModal;
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">${m.id?"Editar Plataforma":"Nova Plataforma"}</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="form-label">Nome</label>
+        <input class="form-input" type="text" placeholder="Ex: Zendesk" value="${esc(m.name)}" oninput="_platModal.name=this.value"/>
+      </div>
+      <div>
+        <label class="form-label">Cor</label>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:2px">
+          ${PRESET_COLORS.map(c=>`<div onclick="_platModal.color='${c}';renderPlatModal()" style="width:24px;height:24px;border-radius:5px;background:${c};cursor:pointer;border:2px solid ${m.color===c?"#fff":"transparent"};flex-shrink:0"></div>`).join("")}
+          <input type="color" value="${m.color}" oninput="_platModal.color=this.value;renderPlatModal()" style="width:24px;height:24px;border:none;border-radius:5px;cursor:pointer;padding:0;background:none" title="Cor personalizada"/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Motivos cadastrados</label>
+      <div style="display:flex;flex-direction:column;gap:5px;max-height:150px;overflow-y:auto;margin-bottom:8px;padding-right:3px">
+        ${m.reasons.length===0?"<div style='font-size:11px;color:#334155;font-family:Inter,sans-serif'>Nenhum motivo ainda.</div>":""}
+        ${m.reasons.map((r,i)=>`
+          <div style="display:flex;align-items:center;gap:7px;background:#0b112088;border-radius:7px;padding:6px 9px;border:1px solid #1e2d4550">
+            <div style="width:5px;height:5px;border-radius:50%;background:${m.color};flex-shrink:0"></div>
+            <span style="flex:1;font-size:12px;color:#94a3b8;font-family:Inter,sans-serif">${esc(r)}</span>
+            <button onclick="_platModal.reasons.splice(${i},1);renderPlatModal()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:15px;padding:0 2px">×</button>
+          </div>`).join("")}
+      </div>
+      <div style="display:flex;gap:7px">
+        <input class="form-input" type="text" id="inp-new-reason" placeholder="Novo motivo de erro..." value="${esc(_newReason)}" oninput="_newReason=this.value" onkeydown="if(event.key==='Enter')addReasonToPlatModal()"/>
+        <button class="btn-primary" style="white-space:nowrap;padding:9px 13px" onclick="addReasonToPlatModal()">+ Add</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:5px">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" onclick="savePlatModal()">Salvar Plataforma</button>
+    </div>`;
+}
+function addReasonToPlatModal(){
+  const r=_newReason.trim();if(!r)return;
+  if(_platModal.reasons.includes(r)){alert("Motivo já existe.");return;}
+  _platModal.reasons.push(r);_newReason="";renderPlatModal();
+  setTimeout(()=>{const el=document.getElementById("inp-new-reason");if(el)el.focus();},50);
+}
+function savePlatModal(){
+  const m=_platModal;if(!m.name.trim()){alert("Digite o nome da plataforma.");return;}
+  const dup=STATE.platforms.find(p=>p.name.toLowerCase()===m.name.trim().toLowerCase()&&p.id!==m.id);
+  if(dup){alert("Já existe uma plataforma com esse nome.");return;}
+  const rec={id:m.id||uid(),name:m.name.trim(),color:m.color,reasons:[...m.reasons]};
+  if(m.id){STATE.platforms=STATE.platforms.map(p=>p.id===m.id?rec:p);}else{STATE.platforms.push(rec);}
+  savePlatforms();closeModal();goPage("platforms");
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// EXPORTAR
+// ═══════════════════════════════════════════════════════════
+function exportCSV(){
+  const rows=[["Data","Plataforma","Motivo","Status","Impacto","Horario Queda","Horario Retorno","Tempo Improdutivo (min)","Reportado Por","Observacoes"]];
+  STATE.incidents.sort((a,b)=>a.date.localeCompare(b.date)).forEach(i=>{
+    rows.push([
+      fmtDate(i.date),i.platform,i.reason,i.status||"Resolvido",i.impact||"",
+      i.timeDown||"",i.timeBack||"",calcMins(i.timeDown,i.timeBack)||"",
+      i.reporter||"",i.notes||""
+    ]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\r\n");
+  const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=`igreen-ocorrencias-${new Date().toISOString().split("T")[0]}.csv`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+function exportXLSX(){
+  if(typeof XLSX==="undefined"){
+    const s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+    s.onload=()=>_doExportXLSX();
+    document.head.appendChild(s);
+  } else {_doExportXLSX();}
+}
+function _doExportXLSX(){
+  const rows=[["Data","Plataforma","Motivo","Status","Impacto","Horário Queda","Horário Retorno","Tempo Improdutivo (min)","Reportado Por","Observações"]];
+  STATE.incidents.sort((a,b)=>a.date.localeCompare(b.date)).forEach(i=>{
+    rows.push([fmtDate(i.date),i.platform,i.reason,i.status||"Resolvido",i.impact||"",i.timeDown||"",i.timeBack||"",calcMins(i.timeDown,i.timeBack)||0,i.reporter||"",i.notes||""]);
+  });
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  // Auto column widths
+  ws["!cols"]=[{wch:12},{wch:14},{wch:50},{wch:18},{wch:14},{wch:14},{wch:14},{wch:22},{wch:20},{wch:40}];
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Ocorrências");
+  XLSX.writeFile(wb,`igreen-ocorrencias-${new Date().toISOString().split("T")[0]}.xlsx`);
+}
+
+function openPrintModal(){
+  const months=[...new Set(STATE.incidents.map(i=>monthKey(i.date)))].sort();
+  document.getElementById("modal-box").innerHTML=`
+    <div class="modal-header">
+      <div class="modal-title">🖨️ Imprimir Relatório</div>
+      <button class="btn-ghost btn-sm" onclick="closeModal()">✕</button>
+    </div>
+    <p style="font-size:13px;color:#94a3b8;font-family:Inter,sans-serif;margin-bottom:18px;">Escolha o período do relatório:</p>
+    <div style="display:flex;flex-direction:column;gap:8px;max-height:55vh;overflow-y:auto;padding-right:4px;">
+      <button class="btn-primary" style="text-align:left;padding:12px 16px;" onclick="exportPrint(null);closeModal()">
+        📋 Relatório Geral — Todos os meses
+        <span style="display:block;font-size:11px;font-weight:400;opacity:.75;margin-top:2px">${STATE.incidents.length} ocorrências no total</span>
+      </button>
+      ${months.map(m=>{
+        const cnt=STATE.incidents.filter(i=>monthKey(i.date)===m).length;
+        return `<button class="btn-ghost" style="text-align:left;padding:11px 16px;" onclick="exportPrint('${m}');closeModal()">
+          📅 ${monthLabel(m)}
+          <span style="display:block;font-size:11px;opacity:.65;margin-top:2px">${cnt} ocorrência${cnt!==1?"s":""}</span>
+        </button>`;
+      }).reverse().join("")}
+    </div>
+    <div style="margin-top:14px;display:flex;justify-content:flex-end">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+    </div>`;
+  document.getElementById("modal-overlay").classList.remove("hidden");
+}
+
+function exportPrint(filterMonth){
+  const allInc=STATE.incidents.sort((a,b)=>a.date.localeCompare(b.date));
+  const inc=filterMonth?allInc.filter(i=>monthKey(i.date)===filterMonth):allInc;
+  const byMonth={};
+  inc.forEach(i=>{const k=monthKey(i.date);if(!byMonth[k])byMonth[k]=[];byMonth[k].push(i);});
+  const totalMins=inc.reduce((a,i)=>a+calcMins(i.timeDown,i.timeBack),0);
+  const byPlat={};STATE.platforms.forEach(p=>{byPlat[p.name]=inc.filter(i=>i.platform===p.name).length;});
+  const titulo=filterMonth?`Relatório — ${monthLabel(filterMonth)}`:"Relatório de Ocorrências";
+
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"/>
+  <title>iGreen Energy — ${titulo}</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Arial,sans-serif;font-size:12px;color:#111;padding:20px;}
+    h1{font-size:20px;margin-bottom:4px;color:#009955;}
+    .sub{font-size:11px;color:#666;margin-bottom:18px;}
+    .footer-brand{font-size:10px;color:#999;text-align:center;margin-top:20px;border-top:1px solid #eee;padding-top:10px;}
+    .summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+    .sum-box{border:1px solid #ddd;border-radius:6px;padding:10px 16px;min-width:120px;}
+    .sum-num{font-size:22px;font-weight:bold;color:#009955;}
+    .sum-label{font-size:10px;color:#666;margin-top:2px;}
+    h2{font-size:13px;margin:16px 0 6px;background:#f5f5f5;padding:6px 10px;border-left:4px solid #009955;}
+    table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:11px;}
+    th{background:#f0f0f0;text-align:left;padding:5px 7px;border:1px solid #ddd;font-size:10px;}
+    td{padding:4px 7px;border:1px solid #eee;vertical-align:top;}
+    tr:nth-child(even) td{background:#fafafa;}
+    @media print{body{padding:10px;}@page{margin:15mm;}}
+  </style></head><body>
+  <h1>iGreen Energy — ${titulo}</h1>
+  <div class="sub">Equipe Inadimplência · Gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})}</div>
+  <p style="font-size:10px;color:#999;margin-bottom:14px;">Desenvolvido por Jennifer Silveira · iGreen Energy © 2026</p>
+
+  <div class="summary">
+    <div class="sum-box"><div class="sum-num">${inc.length}</div><div class="sum-label">${filterMonth?"Ocorrências no mês":"Total de Ocorrências"}</div></div>
+    ${STATE.platforms.map(p=>`<div class="sum-box"><div class="sum-num" style="color:#333">${byPlat[p.name]||0}</div><div class="sum-label">${p.name}</div></div>`).join("")}
+    ${totalMins>0?`<div class="sum-box"><div class="sum-num" style="color:#c77700">${fmtMins(totalMins)}</div><div class="sum-label">Tempo improdutivo</div></div>`:""}
+  </div>
+
+  ${Object.entries(byMonth).sort().map(([k,mis])=>`
+    <h2>${monthLabel(k)} — ${mis.length} ocorrência${mis.length!==1?"s":""}</h2>
+    <table>
+      <thead><tr><th>Data</th><th>Plataforma</th><th>Motivo</th><th>Status</th><th>Impacto</th><th>Improdutivo</th><th>Reportado por</th><th>Observações</th></tr></thead>
+      <tbody>
+        ${mis.sort((a,b)=>a.date.localeCompare(b.date)).map(i=>`<tr>
+          <td>${fmtDate(i.date)}</td>
+          <td>${i.platform}</td>
+          <td>${i.reason}</td>
+          <td>${i.status||"Resolvido"}</td>
+          <td>${i.impact||"—"}</td>
+          <td>${fmtMins(calcMins(i.timeDown,i.timeBack))||"—"}</td>
+          <td>${i.reporter||"—"}</td>
+          <td>${i.notes||"—"}</td>
+        </tr>`).join("")}
+      </tbody>
+    </table>`).join("")}
+
+  <div class="footer-brand">Desenvolvido por Jennifer Silveira · iGreen Energy © 2026<br>jennifer.silveira@igreenenergy.com.br</div>
+  </body></html>`;
+
+  const win=window.open("","_blank");
+  win.document.write(html);
+  win.document.close();
+  setTimeout(()=>win.print(),500);
+}
+
+// ═══════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════
+function closeModal(){document.getElementById("modal-overlay").classList.add("hidden");}
+function closeModalOverlay(e){if(e.target===document.getElementById("modal-overlay"))closeModal();}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+loadState();
+initSeedPasswords().then(()=>{if(!restoreSession()){/* stay on login page */}});
+</script>
+</body>
+</html>
