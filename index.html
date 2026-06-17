@@ -314,7 +314,7 @@ const SEED_INCIDENTS=[
 ];
 
 const SEED_USERS=[
-  {id:"u1",name:"Jennifer Silveira",email:"jennifer.silveira@igreenenergy.com.br",login:"jennifer.silveira",passwordHash:"__SEED__igreen2026",role:"admin"},
+  {id:"u1",name:"Jennifer Silveira",email:"jennifer.silveira@igreenenergy.com.br",login:"jennifer.silveira@igreenenergy.com.br",passwordHash:"__SEED__igreen2026",role:"admin"},
   {id:"u2",name:"Visualização Geral",email:"",login:"visualizacao",passwordHash:"",role:"viewer"}
 ];
 
@@ -340,6 +340,10 @@ function loadState(){
     try{STATE.incidents=JSON.parse(localStorage.getItem("ig_incidents"))||SEED_INCIDENTS;}catch{STATE.incidents=[...SEED_INCIDENTS];}
   }
   try{STATE.users=JSON.parse(localStorage.getItem("ig_users"))||SEED_USERS;}catch{STATE.users=[...SEED_USERS];}
+  // Migração: garante que a admin (u1) sempre tem role admin e login atualizado
+  const adminUser=STATE.users.find(u=>u.id==="u1");
+  if(adminUser&&adminUser.role!=="admin"){adminUser.role="admin";saveUsers();}
+  if(adminUser&&adminUser.login==="jennifer.silveira"){adminUser.login="jennifer.silveira@igreenenergy.com.br";saveUsers();}
   try{STATE.customReasons=JSON.parse(localStorage.getItem("ig_reasons"))||{};}catch{STATE.customReasons={};}
   try{const sp=JSON.parse(localStorage.getItem("ig_platforms"));if(sp&&sp.length>0){STATE.platforms=sp;}else{STATE.platforms=[...SEED_PLATFORMS];savePlatforms();}}catch{STATE.platforms=[...SEED_PLATFORMS];savePlatforms();}
 }
@@ -413,8 +417,11 @@ function restoreSession(){
   try{
     const s=JSON.parse(localStorage.getItem("ig_session"));
     if(!s)return false;
-    const u=STATE.users.find(x=>x.id===s.id&&x.login===s.login&&x.role===s.role);
+    // Busca só pelo id — login e role podem ter mudado
+    const u=STATE.users.find(x=>x.id===s.id);
     if(!u)return false;
+    // Atualiza sessão com dados atuais
+    localStorage.setItem("ig_session",JSON.stringify({id:u.id,login:u.login,role:u.role}));
     activateUser(u);return true;
   }catch{return false;}
 }
