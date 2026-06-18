@@ -485,7 +485,7 @@ body{font-family:"Inter",sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="scard"><h3>🗂️ Excluir dados de um grupo</h3><p style="font-size:12px;color:var(--muted);margin-bottom:.875rem">Apaga <strong>todos os registros</strong> (frequência, ajustes, histórico) de um grupo. Colaboradores permanecem cadastrados.</p><div id="del-group-list"></div></div>
           <div class="scard"><h3>👁️ Visibilidade dos grupos</h3><p style="font-size:12px;color:var(--muted);margin-bottom:.875rem">Grupos visíveis aparecem na seleção pública.</p><div id="gvis-list"></div></div>
           <div class="scard"><h3>👤 Admins</h3><p style="font-size:12px;color:var(--muted);margin-bottom:.875rem">Somente Jennifer pode excluir admins.</p><div id="admins-list"></div><button class="btn-outline" onclick="openAddAdmin()" style="margin-top:.75rem">+ Novo admin</button></div>
-          <div class="scard"><h3>🔑 Alterar senha</h3><p style="font-size:12px;color:var(--muted);margin-bottom:.875rem">Mínimo 6 caracteres · SHA-256</p><div class="mfield"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="mfield"><label>Nova senha</label><input type="password" id="pw-new"></div><div class="mfield"><label>Confirmar</label><input type="password" id="pw-conf"></div><button class="mbtn-ok" onclick="changePw()">Salvar</button><div id="pw-msg" style="font-size:12px;margin-top:.75rem;padding:6px 10px;border-radius:var(--r2);display:none"></div></div>
+          <div class="scard"><h3>🔑 Alterar credenciais</h3><p style="font-size:12px;color:var(--muted);margin-bottom:.875rem">Altere seu e-mail de login e/ou senha. Mínimo 6 caracteres · SHA-256</p><div class="mfield"><label>Novo e-mail de login (opcional)</label><input type="email" id="pw-email" placeholder="Deixe em branco para não alterar"></div><div class="mfield"><label>Senha atual</label><input type="password" id="pw-old"></div><div class="mfield"><label>Nova senha (opcional)</label><input type="password" id="pw-new" placeholder="Deixe em branco para não alterar"></div><div class="mfield"><label>Confirmar nova senha</label><input type="password" id="pw-conf"></div><button class="mbtn-ok" onclick="changePw()">Salvar</button><div id="pw-msg" style="font-size:12px;margin-top:.75rem;padding:6px 10px;border-radius:var(--r2);display:none"></div></div>
         </div>
       </div>
 
@@ -802,12 +802,15 @@ function defG(){return{colaboradores:[],registros:{},ajustes:[],historico:[],nex
 function defGS(){
   const h='f82cbde8a20dc4178f0d09bc4d59fde9906edaa43f7a01cd1bd3dcabcc90c48b';
   return{
-    admins:[{name:'Jennifer Silveira',email:SUPER_EMAIL,password:h,isSuper:true,phone:'',phoneSet:false}],
+    admins:[{uid:'super',name:'Jennifer Silveira',email:SUPER_EMAIL,password:h,isSuper:true,phone:'',phoneSet:false}],
     visibility:{eng1:true,eng2:false,ivolt:false,aza:false},
     groups:{eng1:defG(),eng2:defG(),ivolt:defG(),aza:defG()}
   };
 }
-function load(){try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);GROUPS.forEach(g=>{if(!d.groups[g.id])d.groups[g.id]=defG();if(!d.visibility)d.visibility={eng1:true,eng2:false,ivolt:false,aza:false};if(d.visibility[g.id]===undefined)d.visibility[g.id]=false;});return d;}}catch(e){}return defGS();}
+function load(){try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);GROUPS.forEach(g=>{if(!d.groups[g.id])d.groups[g.id]=defG();if(!d.visibility)d.visibility={eng1:true,eng2:false,ivolt:false,aza:false};if(d.visibility[g.id]===undefined)d.visibility[g.id]=false;});
+// Garantir que o Super Admin sempre tenha uid='super' e isSuper=true
+const sup=d.admins.find(a=>a.isSuper);if(sup&&!sup.uid)sup.uid='super';
+return d;}}catch(e){}return defGS();}
 function save(){localStorage.setItem(SK,JSON.stringify(GS));}
 function g(){return GS.groups[gid];}
 function today(){return new Date().toISOString().split('T')[0];}
@@ -822,7 +825,7 @@ function renderAdmG(){const list=document.getElementById('adm-glist');if(!list)r
 function enterPub(id){isAdm=false;isSup=false;gid=id;sessionStorage.setItem(SSK,JSON.stringify({isAdm:false,isSup:false,gid,email:null}));launch();}
 async function doLogin(){const email=document.getElementById('l-email').value.trim().toLowerCase();const pass=document.getElementById('l-pass').value;const h=await hashPass(pass);const adm=GS.admins.find(a=>a.email.toLowerCase()===email&&a.password===h);if(adm){isAdm=true;isSup=!!adm.isSuper;admUser=adm;document.getElementById('l-err').style.display='none';goStep('ep-adm');}else{document.getElementById('l-err').style.display='block';}}
 document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-function enterAdm(id){gid=id;sessionStorage.setItem(SSK,JSON.stringify({isAdm,isSup,gid,email:admUser?.email}));launch();}
+function enterAdm(id){gid=id;sessionStorage.setItem(SSK,JSON.stringify({isAdm,isSup,gid,email:admUser?.email,uid:admUser?.uid||null}));launch();}
 function launch(){
   // Check if phone needs to be set (first login)
   if(isAdm && admUser && !admUser.phoneSet){
@@ -888,7 +891,7 @@ function doForgotPassword(){
 }
 function switchGroup(){clearInterval(syncT);document.getElementById('app').style.display='none';document.getElementById('entry').style.display='flex';if(isAdm)goStep('ep-adm');else goStep('ep-pub');}
 function doLogout(){isAdm=false;isSup=false;gid=null;admUser=null;clearInterval(syncT);sessionStorage.removeItem(SSK);document.getElementById('app').style.display='none';document.getElementById('entry').style.display='flex';goStep('ep-mode');}
-document.addEventListener('DOMContentLoaded',function(){try{const s=sessionStorage.getItem(SSK);if(s){const d=JSON.parse(s);isAdm=d.isAdm||false;isSup=d.isSup||false;gid=d.gid;if(d.email)admUser=GS.admins.find(a=>a.email===d.email)||null;if(gid)launch();}}catch(e){}});
+document.addEventListener('DOMContentLoaded',function(){try{const s=sessionStorage.getItem(SSK);if(s){const d=JSON.parse(s);isAdm=d.isAdm||false;gid=d.gid;if(d.isAdm){admUser=(d.uid?GS.admins.find(a=>a.uid===d.uid):null)||(d.email?GS.admins.find(a=>a.email===d.email):null)||null;isSup=!!admUser?.isSuper;}else{isSup=false;}if(gid)launch();}}catch(e){}});
 function startSync(){clearInterval(syncT);syncT=setInterval(()=>{const f=load();if(JSON.stringify(f)!==JSON.stringify(GS)){GS=f;renderAll();}},SYNC);}
 
 // ── PAGES ──
@@ -1133,7 +1136,19 @@ function renderAdmins(){const list=document.getElementById('admins-list');if(!li
 function openAddAdmin(){['na-n','na-e','na-p'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});const _nm=document.getElementById('na-msg');if(_nm)_nm.textContent='';openM('m-admin');}
 function saveAdmin(){const name=document.getElementById('na-n').value.trim();const email=document.getElementById('na-e').value.trim().toLowerCase();const pass=document.getElementById('na-p').value;const msg=document.getElementById('na-msg');if(!msg)return;if(!name||!email||!pass){msg.textContent='❌ Preencha todos os campos.';msg.style.color='var(--red)';return;}if(GS.admins.find(a=>a.email.toLowerCase()===email)){msg.textContent='❌ E-mail já cadastrado.';msg.style.color='var(--red)';return;}if(pass.length<6){msg.textContent='❌ Mínimo 6 caracteres.';msg.style.color='var(--red)';return;}hashPass(pass).then(h=>{GS.admins.push({name,email,password:h,isSuper:false});save();renderAdmins();msg.textContent='✅ Admin criado!';msg.style.color='var(--green)';});}
 function delAdmin(i){const a=GS.admins[i];if(!a||a.isSuper){showToast('Não é possível excluir.');return;}if(!confirm('Excluir '+a.name+'?'))return;GS.admins.splice(i,1);save();renderAdmins();showToast('Removido.');}
-async function changePw(){const old=document.getElementById('pw-old').value;const nw=document.getElementById('pw-new').value;const conf=document.getElementById('pw-conf').value;const msg=document.getElementById('pw-msg');const sup=GS.admins.find(a=>a.isSuper);function pm(t,ok){msg.textContent=t;msg.style.display='block';msg.style.background=ok?'rgba(52,211,153,.1)':'rgba(248,113,113,.1)';msg.style.color=ok?'#34d399':'#f87171';msg.style.border='.5px solid '+(ok?'rgba(52,211,153,.3)':'rgba(248,113,113,.3)');}if(!old){pm('❌ Digite a senha atual.',false);return;}const oh=await hashPass(old);if(oh!==sup?.password){pm('❌ Senha incorreta.',false);return;}if(nw.length<6){pm('❌ Mínimo 6 caracteres.',false);return;}if(nw!==conf){pm('❌ Não confere.',false);return;}sup.password=await hashPass(nw);save();pm('✅ Senha alterada!',true);['pw-old','pw-new','pw-conf'].forEach(id=>document.getElementById(id).value='');setTimeout(()=>msg.style.display='none',4000);}
+async function changePw(){const newEmail=document.getElementById('pw-email').value.trim().toLowerCase();const old=document.getElementById('pw-old').value;const nw=document.getElementById('pw-new').value;const conf=document.getElementById('pw-conf').value;const msg=document.getElementById('pw-msg');
+// Altera as credenciais do admin atualmente logado
+const target=admUser?.uid?GS.admins.find(a=>a.uid===admUser.uid):GS.admins.find(a=>a.email===admUser?.email);
+function pm(t,ok){msg.textContent=t;msg.style.display='block';msg.style.background=ok?'rgba(52,211,153,.1)':'rgba(248,113,113,.1)';msg.style.color=ok?'#34d399':'#f87171';msg.style.border='.5px solid '+(ok?'rgba(52,211,153,.3)':'rgba(248,113,113,.3)');}
+if(!old){pm('❌ Digite a senha atual para confirmar.',false);return;}
+const oh=await hashPass(old);
+if(oh!==target?.password){pm('❌ Senha atual incorreta.',false);return;}
+// Validate new email if provided
+if(newEmail){const conflict=GS.admins.find(a=>a.email===newEmail&&a!==target);if(conflict){pm('❌ Este e-mail já está em uso.',false);return;}target.email=newEmail;}
+// Validate new password if provided
+if(nw){if(nw.length<6){pm('❌ Nova senha: mínimo 6 caracteres.',false);return;}if(nw!==conf){pm('❌ A nova senha não confere.',false);return;}target.password=await hashPass(nw);}
+admUser=target; // atualiza referência em memória
+save();pm('✅ Credenciais atualizadas!',true);['pw-email','pw-old','pw-new','pw-conf'].forEach(id=>document.getElementById(id).value='');setTimeout(()=>msg.style.display='none',4000);}
 
 
 // ── EXCLUIR MÊS ──
